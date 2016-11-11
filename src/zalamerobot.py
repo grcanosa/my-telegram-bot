@@ -8,6 +8,8 @@ import telegram
 import botsettings as BS;
 import sys
 import emoji
+from telegram import InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext import InlineQueryHandler
 #from mwt import MWT
 
 telegram.User
@@ -46,7 +48,8 @@ class ZalameroBot:
         self._disp.add_handler(CH('nopiropo',self.resp_nopiropo,pass_args=True));
         self._disp.add_handler(CH('pruebacmd',self.resp_prueba));
         self._disp.add_handler(MessageHandler(Filters.command, self.resp_unkown));
-
+        inline_caps_handler = InlineQueryHandler(self.inline_caps)
+        self._disp.add_handler(inline_caps_handler)
 
     def resp_prueba(self,bot,up):
         self._bot.send_message(chat_id=BS.cid_gonzalo,text="Llega comando prueba");
@@ -83,15 +86,29 @@ class ZalameroBot:
 
     def resp_dimealgorealmentebonito(self,bot,up):
         if up.message.chat_id == BS.cid_sara:
-            self._bot.send_message(chat_id=BS.cid_sara,text="Claro que si lovechu, para ti lo que sea...")
+            self._bot.send_message(chat_id=BS.cid_sara,text="Claro que si lovechu, para ti lo que sea")
             self.resp_dimealgobonito(bot,up,False);
         else:
-            self._bot.send_message(chat_id=up.message.chat_id,text="Las cosas realmente bonitas sólo se las digo a una persona... ");
+            self._bot.send_message(chat_id=up.message.chat_id,text="Las cosas realmente bonitas sólo se las digo a una persona ");
 
     def resp_unkown(self,bot,update : telegram.Update):
         text = "Lo siento "+update.message.from_user.first_name+ ", no entendí";
         text += emoji.emojize(':disappointed_relieved:', use_aliases=True);
         self._bot.send_message(chat_id=update.message.chat_id,text=text);
+
+    def inline_caps(self,bot, update):
+        query = update.inline_query.query
+        if not query:
+            return
+        results = list()
+        results.append(
+        InlineQueryResultArticle(
+            id=query.upper(),
+            title='Caps',
+            input_message_content=InputTextMessageContent(query.upper())
+         )
+        )
+        bot.answerInlineQuery(update.inline_query.id, results)
 
 
 
