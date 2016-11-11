@@ -8,10 +8,14 @@ stop)
     echo "Stop BitTorrent Sync..."
     kill "`cat /tmp/grcanosabot.pid`"
     kill "`cat /tmp/grcanosabot.pid`"
+	kill "`cat /tmp/zalamerobot.pid`"
+	kill "`cat /tmp/zalamerobot.pid`"
     ;;
 start)  
-    /volume1/misc/gitproyects/grcanosabot/grcanosabot.py &
+    ./grcanosabot.py &
     echo $! > /tmp/grcanosabot.pid
+	./zalamerobot.py &
+	echo $! > /tmp/zalamerobot.pid
     ;;
 restart)
     $0 stop

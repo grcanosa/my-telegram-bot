@@ -6,8 +6,8 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 import telegram
 import listapiropos
-import grcanosasettings as GRS;
-import emoiji
+import botsettings as GRS;
+import emoji
 
 def start(bot : telegram.Bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
@@ -30,7 +30,7 @@ def resp_trafico(bot,update):
 log_format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 logging.basicConfig(format=log_format,level=logging.INFO)
 
-updater = Updater(token=GRS.TOKEN)
+updater = Updater(token=GRS.GRCANOSA_TOKEN)
 
 dispatcher = updater.dispatcher
 
