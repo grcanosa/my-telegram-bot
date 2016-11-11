@@ -12,10 +12,6 @@ import emoiji
 def start(bot : telegram.Bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
 
-    
-
-
-
 def get_piropo():
     return random.choice(listapiropos.PIROPOSLIST)
 
