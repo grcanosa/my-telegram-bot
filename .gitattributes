@@ -1,2 +1,3 @@
 #pattern  filter=crypt diff=crypt
 src/botsettings.py  filter=crypt diff=crypt
+data/constants.py  filter=crypt diff=crypt
