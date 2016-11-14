@@ -11,7 +11,8 @@ import shutil
 
 class User:
     def __init__(self):
-        self.a=1
+        self._teluser;
+        self._cmd_num
 
 
 
