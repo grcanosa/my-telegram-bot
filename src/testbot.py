@@ -3,7 +3,9 @@
 from telegram.ext import Updater;
 from telegram.ext import CommandHandler as CH;
 from telegram.ext import MessageHandler,Filters;
-import listapiropos as LP;
+import data.piropos as LPIROPOS;
+import data.chistes as LCHISTES;
+import data.peopleemoji as LEMOJI;
 import telegram
 import botsettings as BS;
 import sys
@@ -12,6 +14,7 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import InlineQueryHandler
 from randomphrase import RandomPhrase,PhraseList
 import userregistry
+import logging
 #from mwt import MWT
 
 
@@ -19,8 +22,9 @@ class ZalameroBot:
     def __init__(self,TOKEN):
         self._token = TOKEN;
         self._nopiropo = BS.users_nopiropos;
-        self._randomP = RandomPhrase();
-        self._userR = userregistry.UserRegistry();
+        self._userR = userregistry.UserRegistry("zalamero.user.reg");
+        self._randomP = RandomPhrase(self._userR);
+
 
     def is_from_admin(self,user_id):
         if user_id == BS.cid_gonzalo:
@@ -47,7 +51,9 @@ class ZalameroBot:
         #self._disp.add_handler(CH('dimealgobonito',self.resp_dimealgobonito));
         #self._disp.add_handler(CH('dimealgorealmentebonito',self.resp_dimealgorealmentebonito));
         self._userR.install_handler(self._disp);
-        self._randomP.add_cmd(self._disp,PhraseList('dimealgobonito',LP.PIROPOSLIST),1);
+        self._randomP.add_cmd(self._disp,PhraseList('dimealgobonito',LPIROPOS.LIST),1);
+        self._randomP.add_cmd(self._disp,PhraseList('dimealgodivertido',LCHISTES.LIST),1);
+        self._randomP.add_cmd(self._disp,PhraseList('randomemoji',LEMOJI.LIST),1);
         self._disp.add_handler(CH('sipiropo',self.resp_sipiropo,pass_args=True),1);
         self._disp.add_handler(CH('nopiropo',self.resp_nopiropo,pass_args=True),1);
         self._disp.add_handler(CH('pruebacmd',self.resp_prueba),1);
@@ -118,6 +124,8 @@ class ZalameroBot:
 
 
 def main(argv):
+    log_format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(format=log_format,level=logging.DEBUG)
     zal = ZalameroBot(BS.ZALAMERO_TOKEN);
     zal.init();
     zal.start();

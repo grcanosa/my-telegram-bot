@@ -2,7 +2,7 @@
 
 import random;
 
-PIROPOSLIST = [
+LIST = [
 "Me gustas por tu software no por tu hardware",
 #"Agregame como Repositorio para que descargues las actualizaciones de mi paquete",
 "Quisiera ser integral para ser el área bajo tu curva",
