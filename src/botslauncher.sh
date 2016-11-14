@@ -10,7 +10,10 @@ stop)
     kill "`cat /tmp/telegrambots.pid`"
     ;;
 start)
-    ./botslauncher.py &
+    symlink=$(readlink -f "$0")
+	path=$(dirname $symlink)
+	echo $path
+	$path/botslauncher.py &
     echo $! > /tmp/telegrambots.pid
     ;;
 restart)
