@@ -1,2 +1,2 @@
 #pattern  filter=crypt diff=crypt
-src/data/teletokens.py  filter=crypt diff=crypt
+src/mybot/data/teletokens.py  filter=crypt diff=crypt
