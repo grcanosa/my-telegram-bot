@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 
+import random;
+import logging;
+
 import telegram
 from telegram import Update;
 from telegram.ext import Updater;
 from telegram.ext import CommandHandler as CH;
-import data.peopleemoji as LPEOPLEEMOJI;
-import random;
-import logging;
+from ..data import peopleemoji as LPEOPLEEMOJI;
+
 
 class PhraseList:
     def __init__(self,cmd,list):

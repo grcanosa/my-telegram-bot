@@ -1,20 +1,25 @@
 #!/usr/bin/python3
 
+import sys
+import logging
+
+import emoji
+
+import telegram
 from telegram.ext import Updater;
 from telegram.ext import CommandHandler as CH;
 from telegram.ext import MessageHandler,Filters;
-import data.piropos as LPIROPOS;
-import data.chistes as LCHISTES;
-import data.peopleemoji as LEMOJI;
-import telegram
-import botsettings as BS;
-import sys
-import emoji
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import InlineQueryHandler
-from randomphrase import RandomPhrase,PhraseList
-import userregistry
-import logging
+
+from mybot.data import piropos as LPIROPOS
+from mybot.data import chistes as LCHISTES
+from mybot.data import peopleemoji as LEMOJI
+from mybot.data import teletokens as BS
+
+from mybot.handlers.randomphrase import RandomPhrase,PhraseList
+from mybot.handlers import userregistry
+
 #from mwt import MWT
 
 
