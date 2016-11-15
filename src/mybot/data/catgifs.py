@@ -1,6 +1,6 @@
 #/!usr/bin/python3
 
-
+from ..handlers.phraselist import PhraseList;
 
 LIST = [
 "BQADBAADaAYAAocbZAciIWq9C74SAgI",
@@ -17,3 +17,15 @@ LIST = [
 "BQADBAADQhcAAnEaZAeqYUMfKuaQtgI",
 "BQADBAAD8jcAAhMZZAeuDQABPVHH1ZMC"
 ]
+
+
+class CatGifList(PhraseList):
+    def __init__(self,cmd):
+        super().__init__(cmd,LIST,"gif");
+
+    def get_max_cmd_response(self,update):
+        text = "Nunca hay demasiados gatos! Pide otro "
+        text += update.message.from_user.first_name.split()[0];
+        #return "BQADBAADKgAD15TmAAFDS0IqiyCZgwI","audio"
+        #return "AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"
+        return text,"message";

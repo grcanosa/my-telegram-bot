@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 
 import random;
+from ..handlers.phraselist import PhraseList;
+from .teletokens import CID;
+import emoji
+
+from telegram import Bot,Update;
 
 LIST = [
 "Me gustas por tu software no por tu hardware",
@@ -60,5 +65,52 @@ LIST = [
 "Computer techs have skilled fingers if you know what I mean."
  ];
 
-def get_random_piropo():
-    return random.choice(PIROPOSLIST);
+e_smilekiss = emoji.emojize(":kissing_heart:",use_aliases=True);
+e_lovecat = emoji.emojize(":heart_eyes_cat::kissing_cat:",use_aliases=True);
+e_heartsmile = emoji.emojize(":heart_eyes::kissing_closed_eyes::smile:",use_aliases=True);
+
+
+
+SARALIST = [
+"Te quiero mogollón, que lo sepas",
+"En nada nos vemos!",
+(10*e_smilekiss),
+(10*e_lovecat),
+"Me encanta tu risa",
+"Estás más buena que el pan",
+(9*e_heartsmile),
+"Cuando te vea voy a .... y a ....., arufffffff"
+ ]
+
+
+class PiropoList(PhraseList):
+    def __init__(self,cmd):
+        super().__init__(cmd,LIST,"message");
+
+    def get_max_cmd_response(self,update):
+        text= update.message.from_user.first_name.split()[0];
+        text +=", no seas presumid@, deja de pedir piropos";
+        #return "BQADBAADKgAD15TmAAFDS0IqiyCZgwI","audio"
+        #return "AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"
+        return text,"message";
+
+
+class SaraPiropoList(PhraseList):
+    def __init__(self,cmd):
+        super().__init__(cmd,LIST,"message");
+        self._cid = CID["SARA"]
+
+    def process(self,userR,bot,update):
+        ret = False;
+        if self.cmd_ok(update.message.text):
+            if self._cid == update.message.chat_id:
+                bot.send_message(chat_id=self._cid,text="Claro que si lovechu, a ti te mando lo que me pidas!");
+                #bot.send_message(chat_id=self._cid,text=self.get_random_phrase());
+                bot.send_message(chat_id=self._cid,text=random.choice(SARALIST));
+            else:
+                bot.send_message(chat_id=update.message.chat_id,text="Lo siento, las cosas realmente bonitas solo se las digo a una persona...");
+            ret = True;
+        return ret;
+
+    def get_max_cmd_response(self,update):
+        return "","";

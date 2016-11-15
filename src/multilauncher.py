@@ -30,6 +30,8 @@ class MultiLauncher:
         for p in self._bots_p:
             print("Terminating "+str(p.pid));
             p.terminate();
+            
+
 
 
 

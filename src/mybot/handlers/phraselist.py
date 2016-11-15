@@ -4,6 +4,7 @@ import logging;
 import random
 
 
+
 class PhraseList:
     def __init__(self,cmd,list,phrasetype="message"):
         self._cmd = cmd;
@@ -19,8 +20,25 @@ class PhraseList:
     def get_cmd(self):
         return self._cmd;
 
-    # def get_max_cmd_response(self,update):
-    #     text = update.message.from_user.first_name.split()[0]
-    #     text+=", no hay que ser cansino..."
-    #     text+= random.choice(..data.peopleemoji.LIST);
-    #     return text,"message";
+    def process(self,userR,bot,update):
+        ret = False;
+        if self.cmd_ok(update.message.text):
+            phrasetype = self._type;
+            text = "";
+            logging.debug("Cmd %s RECEIVED",self._cmd);
+            if userR.inc_cmd(update.message.from_user.id,self._cmd):
+                text+=self.get_random_phrase();
+            else:
+                text, phrasetype = self.get_max_cmd_response(update);
+            ret = True;
+            if phrasetype == "message":
+                bot.send_message(chat_id=update.message.chat_id,text=text);
+            elif phrasetype == "gif":
+                bot.send_document(chat_id=update.message.chat_id,document=text);
+            elif phrasetype == "voice":
+                bot.sendVoice(chat_id=update.message.chat_id,voice=text)
+            elif phrasetype == "audio":
+                bot.send_audio(chat_id=update.message.chat_id,audio=text);
+            else:
+                ret = False;
+        return ret;
