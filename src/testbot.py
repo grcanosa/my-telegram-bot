@@ -44,7 +44,7 @@ class ZalameroBot:
         self._bot = self._up.bot;
         self.install_handlers();
 
-
+0
 
     def install_handlers(self):
         #self._disp.add_handler(CH('dimealgobonito',self.resp_dimealgobonito));

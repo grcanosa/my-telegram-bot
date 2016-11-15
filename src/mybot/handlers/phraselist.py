@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 import logging;
-from ..data import peopleemoji as LPEOPLEEMOJI;
+import random
+
 
 class PhraseList:
     def __init__(self,cmd,list,phrasetype="message"):
@@ -18,8 +19,8 @@ class PhraseList:
     def get_cmd(self):
         return self._cmd;
 
-    def get_max_cmd_response(self,update):
-        text = update.message.from_user.first_name.split()[0]
-        text+=", no hay que ser cansino..."
-        text+= LPEOPLEEMOJI.get_random();
-        return text,"message";
+    # def get_max_cmd_response(self,update):
+    #     text = update.message.from_user.first_name.split()[0]
+    #     text+=", no hay que ser cansino..."
+    #     text+= random.choice(..data.peopleemoji.LIST);
+    #     return text,"message";

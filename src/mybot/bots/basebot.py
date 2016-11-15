@@ -12,7 +12,6 @@ class BaseBot:
         self._up = Updater(self._token);
         self._disp = self._up.dispatcher;
         self._bot = self._up.bot;
-        self.install_handlers();
 
     def start(self):
         self._up.start_polling();

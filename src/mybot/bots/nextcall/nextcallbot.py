@@ -7,7 +7,7 @@ from ...data.teletokens import TOKEN;
 from ...data.peopleemoji import PeopleEmoji;
 
 from ...handlers.userregistry import UserRegistry;
-from ...handlers.ramdomphrase import RandomPhrase;
+from ...handlers.randomphrase import RandomPhrase;
 from ..basebot import BaseBot;
 
 
@@ -20,6 +20,16 @@ class NextCallBot(BaseBot):
         self._randomP = RandomPhrase(self._userR);
         self.install_handlers();
 
-    def install_handlers():
+    def install_handlers(self):
         self._userR.install_handler(self._disp);
-        self._randomP.add_cmd(self._disp,PeopleEmoji(),10)
+        self._randomP.add_cmd(self._disp,PeopleEmoji("randomemoji"),10)
+
+
+
+
+
+
+def main():
+    n = NextCallBot();
+    n.start();
+    n.idle();
