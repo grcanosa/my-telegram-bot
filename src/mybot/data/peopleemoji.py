@@ -1,6 +1,6 @@
 import emoji;
 import random;
-
+from ..handlers.phraselist import PhraseList;
 
 NAMELIST = [
    ":bowtie:",
@@ -71,6 +71,17 @@ LIST = [];
 for s in NAMELIST:
     LIST.append(emoji.emojize(s,use_aliases=True));
 
+class PeopleEmoji(PhraseList):
+    def __init__(self,cmd):
+        self._cmd = cmd;
+        self._list = LIST;
+        self._type ="message";
+        text = "Quieres emoji?, pues toma dos ";
+        text += emoji.emojize(":coffee::coffee: \n",use_aliases=True);
+        self._response = text;
 
-def get_random():
-    return random.choice(LIST);
+    def get_max_cmd_response(self,update):
+        text = self._response;
+        for i in range(1,20):
+            text+=self.get_random_phrase();
+        return text,"message";
