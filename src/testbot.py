@@ -44,14 +44,7 @@ class ZalameroBot:
         self._bot = self._up.bot;
         self.install_handlers();
 
-    def start(self):
-        self._up.start_polling();
 
-    def stop(self):
-        self._up.stop();
-
-    def idle(self):
-        self._up.idle();
 
     def install_handlers(self):
         #self._disp.add_handler(CH('dimealgobonito',self.resp_dimealgobonito));
