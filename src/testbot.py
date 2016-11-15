@@ -16,6 +16,7 @@ from mybot.data import piropos as LPIROPOS
 from mybot.data import chistes as LCHISTES
 from mybot.data import peopleemoji as LEMOJI
 from mybot.data import teletokens as BS
+from mybot.data import catgifs as LCATGIFS;
 
 from mybot.handlers.randomphrase import RandomPhrase,PhraseList
 from mybot.handlers import userregistry
@@ -56,9 +57,10 @@ class ZalameroBot:
         #self._disp.add_handler(CH('dimealgobonito',self.resp_dimealgobonito));
         #self._disp.add_handler(CH('dimealgorealmentebonito',self.resp_dimealgorealmentebonito));
         self._userR.install_handler(self._disp);
-        self._randomP.add_cmd(self._disp,PhraseList('dimealgobonito',LPIROPOS.LIST),1);
-        self._randomP.add_cmd(self._disp,PhraseList('dimealgodivertido',LCHISTES.LIST),1);
-        self._randomP.add_cmd(self._disp,PhraseList('randomemoji',LEMOJI.LIST),1);
+        self._randomP.add_cmd(self._disp,PhraseList('dimealgobonito',LPIROPOS.LIST),10);
+        self._randomP.add_cmd(self._disp,PhraseList('dimealgodivertido',LCHISTES.LIST),10);
+        self._randomP.add_cmd(self._disp,PhraseList('randomemoji',LEMOJI.LIST),10);
+        self._randomP.add_cmd(self._disp,PhraseList('cat',LCATGIFS.LIST,"gif"),10);
         self._disp.add_handler(CH('sipiropo',self.resp_sipiropo,pass_args=True),1);
         self._disp.add_handler(CH('nopiropo',self.resp_nopiropo,pass_args=True),1);
         self._disp.add_handler(CH('pruebacmd',self.resp_prueba),1);
@@ -68,6 +70,9 @@ class ZalameroBot:
 
     def resp_prueba(self,bot,up):
         self._bot.send_message(chat_id=BS.cid_gonzalo,text="Llega comando prueba");
+        self._bot.send_photo(chat_id=BS.cid_gonzalo,photo="AgADBAADA6kxG9eU5gABGrw2vLyFUcYeb2QZAAQzoyHMI_ZMOO-7AAIC");
+        #self._bot.send_video(chat_id=BS.cid_gonzalo,video="BQADBAADdgMAAuAYZAdM22FCusLMPQI");
+        self._bot.send_document(chat_id=BS.cid_gonzalo,document="BQADBAADdgMAAuAYZAdM22FCusLMPQI");
 
 
 

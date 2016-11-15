@@ -11,9 +11,10 @@ from ..data import peopleemoji as LPEOPLEEMOJI;
 
 
 class PhraseList:
-    def __init__(self,cmd,list):
+    def __init__(self,cmd,list,phrasetype="message"):
         self._cmd = cmd;
         self._list = list;
+        self._type = phrasetype;
 
     def get_random_phrase(self):
         return random.choice(self._list);
@@ -43,6 +44,7 @@ class RandomPhrase:
         for phraselist in self._cmd_list:
             if phraselist.cmd_ok(update.message.text):
                 added = True;
+                phrasetype = phraselist._type;
                 logging.debug("Cmd %s RECEIVED",phraselist._cmd);
                 if self._user_reg.inc_cmd(update.message.from_user.id,phraselist._cmd):
                     text+=phraselist.get_random_phrase();
@@ -50,7 +52,13 @@ class RandomPhrase:
                     text += update.message.from_user.first_name.split()[0]
                     text+=", no hay que ser cansino..."
                     text+= LPEOPLEEMOJI.get_random();
+                    phrasetype = "message";
                     break;
         if not added:
-            text += "NOT UNDERSTAND";
-        bot.send_message(chat_id=update.message.chat_id,text=text);
+            text += "Command not defined yet! ";
+            text += emoji.emojize(":crying_cat_face:",use_aliases=True);
+            phrasetype="message";
+        if phrasetype == "message":
+            bot.send_message(chat_id=update.message.chat_id,text=text);
+        elif phrasetype == "gif":
+            bot.send_document(chat_id=update.message.chat_id,document=text);
