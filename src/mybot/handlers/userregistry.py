@@ -52,7 +52,7 @@ class UserRegistry:
             self._users.append(User(update.message.from_user));
             self.generate_file();
         else:
-            print("User already in list");
+            logging.debug("User %s already in list",update.message.from_user.first_name);
 
     def inc_cmd(self,user_id,cmd):
         return self.get_user(user_id).inc_cmd(cmd);
@@ -63,7 +63,7 @@ class UserRegistry:
                 return us;
 
     def generate_file(self):
-        print("Generating file");
+        logging.debug("Generating user file");
         data = [];
         for us in self._users:
             user_j = {}

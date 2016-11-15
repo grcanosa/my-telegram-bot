@@ -131,7 +131,7 @@ class ZalameroBot:
 def main(argv):
     log_format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(format=log_format,level=logging.DEBUG)
-    zal = ZalameroBot(BS.ZALAMERO_TOKEN);
+    zal = ZalameroBot(BS.NEXTCALL_TOKEN);
     zal.init();
     zal.start();
     zal.idle();
