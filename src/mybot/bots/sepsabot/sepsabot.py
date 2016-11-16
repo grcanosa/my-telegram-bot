@@ -8,6 +8,7 @@ from ...data.teletokens import TOKEN;
 from ...data.peopleemoji import PeopleEmoji;
 from ...data.piropos import PiropoList,SaraPiropoList;
 from ...data.catgifs import CatGifList;
+from ...data import sepsa as DSEPSA;
 
 from ...handlers.userregistry import UserRegistry;
 from ...handlers.randomphrase import RandomPhrase;
@@ -27,11 +28,11 @@ class SepsaBot(BaseBot):
 
     def install_handlers(self):
         self._userR.install_handler(self._disp);
+        self._fixedResp.append(FixedResponse(self._disp,"sepsa",DSEPSA.sepsa_is_great_msg,"message",10))
         self._fixedResp.append(FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice",10))
         self._fixedResp.append(FixedResponse(self._disp,"start","Hola, soy SepsaBot, usa un comando para probarme","message",10))
         self._randomP.add_cmd(self._disp,PeopleEmoji("randomemoji"),10);
         self._randomP.add_cmd(self._disp,PiropoList("dimealgobonito"),10);
-        self._randomP.add_cmd(self._disp,SaraPiropoList("dimealgorealmentebonito"),10);
         self._randomP.add_cmd(self._disp,CatGifList("cat"),10);
         self._disp.add_handler(MessageHandler(Filters.command, self._randomP.proc_phrase),10);
 
@@ -41,6 +42,6 @@ class SepsaBot(BaseBot):
 
 
 def main():
-    n = NextCallBot();
+    n = SepsaBot();
     n.start();
     n.idle();

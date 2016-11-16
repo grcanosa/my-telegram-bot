@@ -137,6 +137,9 @@ NAMELIST = [
 # ":trollface:"
    ];
 
+
+
+
 LIST = [];
 for s in NAMELIST:
     LIST.append(emoji.emojize(s,use_aliases=True));
