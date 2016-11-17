@@ -12,6 +12,7 @@ from ...data.catgifs import CatGifList;
 from ...handlers.userregistry import UserRegistry;
 from ...handlers.cmdcollection import CmdCollection;
 from ...handlers.fixedresponse import FixedResponse;
+from ...handlers.userstats import UserStats;
 from ..basebot import BaseBot;
 
 
@@ -29,6 +30,7 @@ class NextCallBot(BaseBot):
 
         self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"));
         self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"start","Hola, soy NextCallBot, usa un comando para probarme","message"));
+        self._cmdC10.add_cmd(self._disp,UserStats(self._disp,"stats"));
         self._cmdC10.add_cmd(self._disp,PeopleEmoji("randomemoji"));
         self._cmdC10.add_cmd(self._disp,PiropoList("dimealgobonito"));
         self._cmdC10.add_cmd(self._disp,SaraPiropoList("dimealgorealmentebonito"));
