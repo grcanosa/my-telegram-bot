@@ -2,23 +2,18 @@
 
 import logging;
 import random
+from .cmdprocessor import CmdProcessor;
 
 
-
-class PhraseList:
+class PhraseList(CmdProcessor):
     def __init__(self,cmd,list,phrasetype="message"):
+        super().__init__(cmd);
         self._cmd = cmd;
         self._list = list;
         self._type = phrasetype;
 
     def get_random_phrase(self):
         return random.choice(self._list);
-
-    def cmd_ok(self,text):
-        return self._cmd in text;
-
-    def get_cmd(self):
-        return self._cmd;
 
     def process(self,userR,bot,update):
         ret = False;

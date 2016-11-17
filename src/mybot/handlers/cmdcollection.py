@@ -11,21 +11,22 @@ from telegram.ext import CommandHandler as CH;
 from ..data import peopleemoji as LPEOPLEEMOJI;
 
 
-class RandomPhrase:
-    def __init__(self,userReg):
+class CmdCollection:
+    def __init__(self,userReg,priority = 50):
         self._cmd_list = [];
         self._user_reg = userReg;
+        self._priority = priority;
 
 
-    def add_cmd(self,dispatcher,phraselist, priority=1):
-        self._cmd_list.append(phraselist);
-        dispatcher.add_handler(CH(phraselist.get_cmd(),self.proc_phrase),priority);
+    def add_cmd(self,dispatcher,cmdprocessor):
+        self._cmd_list.append(cmdprocessor);
+        dispatcher.add_handler(CH(cmdprocessor.get_cmd(),self.proc_phrase),self._priority);
 
     def proc_phrase(self,bot,update):
         logging.debug("Received: %s",update.message.text);
         added = False;
-        for phraselist in self._cmd_list:
-            if phraselist.process(self._user_reg,bot,update):
+        for cmdproc in self._cmd_list:
+            if cmdproc.process(self._user_reg,bot,update):
                 added = True;
                 break;
         if not added:

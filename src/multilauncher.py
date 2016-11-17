@@ -7,7 +7,7 @@ import multiprocessing as mp;
 import logging;
 
 import mybot.bots.nextcall.nextcallbot as nextcallbot;
-import mybot.bots.sepsabot.sepsabot as sepsabot
+#import mybot.bots.sepsabot.sepsabot as sepsabot
 
 
 
@@ -16,7 +16,7 @@ class MultiLauncher:
     def __init__(self):
         self._bots_f = [];
         self._bots_f.append(nextcallbot.main)
-        self._bots_f.append(sepsabot.main)
+        #self._bots_f.append(sepsabot.main)
         self._bots_p = [];
 
 
