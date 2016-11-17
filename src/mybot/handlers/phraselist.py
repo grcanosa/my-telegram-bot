@@ -18,10 +18,11 @@ class PhraseList(CmdProcessor):
     def process(self,userR,bot,update):
         ret = False;
         if self.cmd_ok(update.message.text):
+            userR.inc_cmd(update.message.from_user.id,self._cmd);
             phrasetype = self._type;
             text = "";
             logging.debug("Cmd %s RECEIVED",self._cmd);
-            if userR.inc_cmd(update.message.from_user.id,self._cmd):
+            if userR.is_cmd_max_num(update.message.from_user.id,self._cmd):
                 text+=self.get_random_phrase();
             else:
                 text, phrasetype = self.get_max_cmd_response(update);

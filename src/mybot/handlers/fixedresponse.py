@@ -16,6 +16,7 @@ class FixedResponse(CmdProcessor):
     def process(self,userR,bot,update):
         ret = False;
         if self.cmd_ok(update.message.text):
+            userR.inc_cmd(update.message.from_user.id,self._cmd);
             ret = True;
             if self._type == "message":
                 bot.send_message(chat_id=update.message.chat_id,text=self._resp);

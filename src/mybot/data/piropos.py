@@ -103,6 +103,7 @@ class SaraPiropoList(PhraseList):
     def process(self,userR,bot,update):
         ret = False;
         if self.cmd_ok(update.message.text):
+            userR.inc_cmd(update.message.from_user.id,self._cmd);
             if self._cid == update.message.chat_id:
                 bot.send_message(chat_id=self._cid,text="Claro que si lovechu, a ti te mando lo que me pidas!");
                 #bot.send_message(chat_id=self._cid,text=self.get_random_phrase());

@@ -23,6 +23,7 @@ class PhraseList:
     def process(self,userR,bot,update):
         ret = False;
         if self.cmd_ok(update.message.text):
+            userR.inc_cmd(update.message.from_user.id,self._cmd);
             phrasetype = self._type;
             text = "";
             logging.debug("Cmd %s RECEIVED",self._cmd);

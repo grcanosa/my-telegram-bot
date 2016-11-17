@@ -41,7 +41,14 @@ class User:
         self.user_j = user_j;
         for cmd in self.user_j["CMD_INFO"]: self._cmd_num[cmd] = 0;
 
-    def inc_cmd(self,cmd,max_cmd_num = def_max_num_cmd):
+    def is_cmd_max_num(self,cmd,max_cmd_num = def_max_num_cmd):
+        if self._cmd_num[cmd] == max_cmd_num:
+            self._cmd_num[cmd] = 0;
+            return False;
+        else:
+            return True;
+
+    def inc_cmd(self,cmd):
         logging.debug("User %d sends command %s",self.get_id(),cmd);
         if not cmd in self._cmd_num:
             self._cmd_num[cmd] = 1;
@@ -49,11 +56,7 @@ class User:
         else:
             self._cmd_num[cmd] += 1;
             self.user_j["CMD_INFO"][cmd] += 1;
-        if self._cmd_num[cmd] == max_cmd_num:
-            self._cmd_num[cmd] = 0;
-            return False;
-        else:
-            return True;
+
 
 
 
@@ -99,6 +102,14 @@ class UserRegistry:
             self.generate_file();
         else:
             logging.debug("User %s already in list",update.message.from_user.first_name);
+
+
+    def is_cmd_max_num(self,user_id,cmd):
+        u = self.get_user(user_id);
+        if u is not None:
+            return u.is_cmd_max_num(cmd);
+        else:
+            return True;
 
     def inc_cmd(self,user_id,cmd):
         u = self.get_user(user_id);

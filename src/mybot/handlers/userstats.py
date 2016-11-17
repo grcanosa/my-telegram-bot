@@ -10,6 +10,7 @@ class UserStats(CmdProcessor):
     def process(self,userR,bot,update):
         ret = False;
         if self.cmd_ok(update.message.text):
+            userR.inc_cmd(update.message.from_user.id,self._cmd);
             ret = True;
             text = "";
             u = userR.get_user(update.message.from_user.id);

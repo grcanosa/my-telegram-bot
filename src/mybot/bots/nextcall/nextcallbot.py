@@ -19,9 +19,10 @@ from ..basebot import BaseBot;
 
 
 class NextCallBot(BaseBot):
-    def __init__(self):
-        super().__init__( TOKEN["NEXTCALL_BOT"]);
-        self._userR = UserRegistry("log/nextcall.users.reg")
+    def __init__(self,logfolder):
+        super().__init__(TOKEN["NEXTCALL_BOT"]);
+        self._logFile = logfolder+"/nextcall.users.reg";
+        self._userR = UserRegistry(self._logFile)
         self._cmdC10 = CmdCollection(self._userR,10);
         self.install_handlers();
 
@@ -42,7 +43,7 @@ class NextCallBot(BaseBot):
 
 
 
-def main():
-    n = NextCallBot();
+def main(logfolder = ""):
+    n = NextCallBot(logfolder);
     n.start();
     n.idle();
