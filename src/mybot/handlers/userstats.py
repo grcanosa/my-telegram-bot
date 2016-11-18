@@ -14,8 +14,8 @@ class UserStats(CmdProcessor):
             ret = True;
             text = "";
             u = userR.get_user(update.message.from_user.id);
-            text += "You are "+u.get_name()+ " with id "+str(u.get_id())+"\n";
-            text += "These are your stats: \n";
+            text += "Eres "+u.get_name()+ " con número de usuario telegram: "+str(u.get_id())+"\n";
+            text += "Esto es lo que me has pedido desde que te conozc: \n";
             for cmd,num in u.get_cmds().items():
                 text += '{0:<5}'.format(num)+" - "+cmd+"\n";
             bot.send_message(chat_id=update.message.chat_id,text=text);

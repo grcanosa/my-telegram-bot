@@ -2,6 +2,7 @@
 
 import telegram
 from telegram import Update;
+from telegram.ext import Job;
 from telegram.ext import Updater;
 from telegram.ext import MessageHandler,Filters;
 import random;
@@ -82,9 +83,19 @@ class UserRegistry:
                 u.fill_from_json(usj);
                 self._users.append(u);
 
+    def install(self,updater):
+        self.install_handler(updater.dispatcher);
+        self.install_periodic_job(updater.job_queue);
+
     def install_handler(self,dispatcher):
         dispatcher.add_handler(MessageHandler(Filters.all, self.proc_msg),0);
 
+    def install_periodic_job(self,jobqeue):
+        j = Job(self.periodic_job_callback, 3600);
+        jobqeue.put(j,next_t=60);
+
+    def periodic_job_callback(self,bot,job):
+        self.generate_file();
 
     def exist_user(self,teluser):
         logging.debug("Checking if %d is in list of size %d",teluser.id,len(self._users));

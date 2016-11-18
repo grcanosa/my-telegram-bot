@@ -27,7 +27,8 @@ class NextCallBot(BaseBot):
         self.install_handlers();
 
     def install_handlers(self):
-        self._userR.install_handler(self._disp);
+        self._userR.install(self._up);
+        #self._userR.install_handler(self._disp);
 
         self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"));
         self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"start","Hola, soy NextCallBot, usa un comando para probarme","message"));
