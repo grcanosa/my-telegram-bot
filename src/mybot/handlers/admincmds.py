@@ -35,3 +35,10 @@ class BroadcastCmd(AdminCmd):
         text = ' '.join(text);
         for us in userR._users:
             bot.send_message(chat_id=us.get_id(),text=text);
+
+class GenerateUserStats(AdminCmd):
+    def __init__(self,cmd,admin_cid):
+        super().__init__(cmd,admin_cid);
+
+    def proc_admin_cmd(self,userR,bot,update):
+        userR.generate_file();
