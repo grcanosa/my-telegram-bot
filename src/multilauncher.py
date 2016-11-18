@@ -60,6 +60,9 @@ def parse_args(argv):
     parser.add_option("--datafolder",help="Folder where the data is going to be looked for",default="",dest="datafolder")
     parser.add_option("--b",help="Name of the bot to launch",action="append",dest="bots")
     options,args = parser.parse_args(argv);
+    if options.bots is None:
+        options.bots = [];
+        options.bots.append("ALL");
     return options;
 
 
