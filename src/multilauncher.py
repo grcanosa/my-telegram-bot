@@ -41,7 +41,7 @@ class MultiLauncher:
             for n in botsnames:
                 if bf.name == n or n == "ALL":
                     p = mp.Process(target=bf.fun,kwargs=kwargs);
-                    self._bots_p.append(BotProc(p,n));
+                    self._bots_p.append(BotProc(p,bf.name));
         for p in self._bots_p:
             print("Starting ",p.name);
             p.proc.start();
