@@ -4,44 +4,54 @@
 from telegram.ext import Updater;
 from telegram.ext import MessageHandler,Filters
 
-from ...data.teletokens import TOKEN;
+from ...data.teletokens import TOKEN,CID;
 from ...data.peopleemoji import PeopleEmoji;
 from ...data.piropos import PiropoList,SaraPiropoList;
 from ...data.catgifs import CatGifList;
-from ...data import sepsa as DSEPSA;
 
 from ...handlers.userregistry import UserRegistry;
-from ...handlers.randomphrase import RandomPhrase;
+from ...handlers.cmdcollection import CmdCollection;
 from ...handlers.fixedresponse import FixedResponse;
+from ...handlers.userstats import UserStats;
+from ...handlers.admincmds import BroadcastCmd;
 from ..basebot import BaseBot;
+from ...data import sepsa as DSEPSA;
 
 
 
 
 class SepsaBot(BaseBot):
-    def __init__(self):
-        super().__init__( TOKEN["SEPSABOT"]);
-        self._userR = UserRegistry("log/nextcall.users.reg")
-        self._randomP = RandomPhrase(self._userR);
-        self._fixedResp = [];
+    def __init__(self,logfolder):
+        super().__init__(TOKEN["SEPSABOT"]);
+        self._logFile = logfolder+"/sepsabot.users.reg";
+        self._userR = UserRegistry(self._logFile)
+        self._cmdC5 = CmdCollection(self._userR,5);
+        self._cmdC10 = CmdCollection(self._userR,10);
         self.install_handlers();
 
     def install_handlers(self):
-        self._userR.install_handler(self._disp);
-        self._fixedResp.append(FixedResponse(self._disp,"sepsa",DSEPSA.sepsa_is_great_msg,"message",10))
-        self._fixedResp.append(FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice",10))
-        self._fixedResp.append(FixedResponse(self._disp,"start","Hola, soy SepsaBot, usa un comando para probarme","message",10))
-        self._randomP.add_cmd(self._disp,PeopleEmoji("randomemoji"),10);
-        self._randomP.add_cmd(self._disp,PiropoList("dimealgobonito"),10);
-        self._randomP.add_cmd(self._disp,CatGifList("cat"),10);
-        self._disp.add_handler(MessageHandler(Filters.command, self._randomP.proc_phrase),10);
+        self._userR.install(self._up);
+        #self._userR.install_handler(self._disp);
+
+
+        self._cmdC10.add_cmd(self._disp,BroadcastCmd("broadcast",CID["GONZALO"]));
+
+        #self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"));
+        self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"start","Hola, soy SepsaBot, usa un comando para probarme","message"));
+        self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"sepsa",DSEPSA.sepsa_is_great_msg,"message"))
+        self._cmdC10.add_cmd(self._disp,UserStats(self._disp,"stats"));
+        self._cmdC10.add_cmd(self._disp,PeopleEmoji("randomemoji"));
+        self._cmdC10.add_cmd(self._disp,PiropoList("dimealgobonito"));
+        #self._cmdC10.add_cmd(self._disp,SaraPiropoList("dimealgorealmentebonito"));
+        #self._cmdC10.add_cmd(self._disp,CatGifList("cat"));
+        self._disp.add_handler(MessageHandler(Filters.command, self._cmdC10.proc_phrase),10);
 
 
 
 
 
 
-def main():
-    n = SepsaBot();
+def main(logfolder = "",*args, **kw):
+    n = SepsaBot(logfolder);
     n.start();
     n.idle();
