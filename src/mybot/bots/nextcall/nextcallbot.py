@@ -44,7 +44,7 @@ class NextCallBot(BaseBot):
 
 
 
-def main(logfolder = ""):
+def main(logfolder = "",*args, **kw):
     n = NextCallBot(logfolder);
     n.start();
     n.idle();

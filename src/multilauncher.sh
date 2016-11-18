@@ -6,14 +6,17 @@ case "$1" in
 
 stop)
     echo "Stop Bots"
-    killall -9 multilauncher.py
+    killall multilauncher.py
     #kill "`cat /tmp/telegrambots.pid`"
+    sleep 10
+    killall -9 multilauncher.py
     ;;
 start)
     symlink=$(readlink -f "$0")
 	  path=$(dirname $symlink)
 	  echo $path
-	  $path/multilauncher.py &
+    mkdir -p $path/log
+	  $path/multilauncher.py --logfolder=$path/log &
     #echo $! > /tmp/telegrambots.pid
     ;;
 restart)

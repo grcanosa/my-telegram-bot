@@ -11,34 +11,54 @@ import mybot.bots.nextcall.nextcallbot as nextcallbot;
 #import mybot.bots.sepsabot.sepsabot as sepsabot
 
 
+class BotFun:
+    def __init__(self,fun,name):
+        self.fun = fun;
+        self.name = name;
+
+class BotProc:
+    def __init__(self,proc,name):
+        self.proc = proc;
+        self.name = name;
+
 
 
 class MultiLauncher:
-    def __init__(self,logfolder=""):
+
+    def __init__(self,logfolder="",datafolder=""):
         self._bots_f = [];
-        self._bots_f.append(nextcallbot.main)
-        #self._bots_f.append(sepsabot.main)
+        self._bots_f.append(BotFun(nextcallbot.main,"nextcall_bot"))
+        #self._bots_f.append([sepsabot.main,"sepsabot"])
         self._bots_p = [];
         self._logfolder = logfolder;
+        self._datafolder = datafolder;
 
 
-    def start(self):
-        for f in self._bots_f:
-            p = mp.Process(target=f,args=[self._logfolder]);
-            self._bots_p.append(p);
-            p.start();
+    def start(self,botsnames):
+        kwargs = {"logfolder": self._logfolder, "datafolder": self._datafolder}
+        for bf in self._bots_f:
+            for n in botsnames:
+                if bf.name == n or n == "ALL":
+                    p = mp.Process(target=bf.fun,kwargs=kwargs);
+                    self._bots_p.append(BotProc(p,n));
+        for p in self._bots_p:
+            print("Starting ",p.name);
+            p.proc.start();
+
 
 
     def terminate(self,signal,frame):
         print("Received "+str(signal))
-        for p in self._bots_p:
-            print("Terminating "+str(p.pid));
-            p.terminate();
+        for bp in self._bots_p:
+            print("Terminating "+bp.name+" with pid: "+str(bp.proc.pid));
+            bp.proc.terminate();
 
 
 def parse_args(argv):
     parser = optparse.OptionParser();
     parser.add_option("--logfolder",help="Folder where the logs should be generated",default="",dest="logfolder")
+    parser.add_option("--datafolder",help="Folder where the data is going to be looked for",default="",dest="datafolder")
+    parser.add_option("--b",help="Name of the bot to launch",action="append",dest="bots")
     options,args = parser.parse_args(argv);
     return options;
 
@@ -50,10 +70,10 @@ def main(argv):
     log_format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(format=log_format,level=logging.WARNING)
     mp.set_start_method('fork')
-    botlaunch = MultiLauncher(op.logfolder);
+    botlaunch = MultiLauncher(op.logfolder,op.datafolder);
     signal.signal(signal.SIGINT, botlaunch.terminate);
     signal.signal(signal.SIGTERM,botlaunch.terminate);
-    botlaunch.start();
+    botlaunch.start(op.bots);
     signal.pause();
 
 
