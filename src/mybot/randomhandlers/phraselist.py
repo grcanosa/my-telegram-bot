@@ -2,20 +2,31 @@
 
 import logging;
 import random
+import os;
 from .cmdprocessor import CmdProcessor;
 
 logger = logging.getLogger(__name__):
 
 class PhraseList(CmdProcessor):
-    def __init__(self,userR,cmd,list,phrasetype="message"):
-        super().__init__(cmd);
-        self._cmd = cmd;
-        self._list = list;
+    def __init__(self,cmdget,cmdadd,data):
+        super().__init__(cmdget);
+        self._cmdadd = cmdadd;
+        self._list = [];
+        self._filename = filename;
+        if os._exists(filename):
+            with open(filename,'r') as f:
+                for l in f: self._list.append(l);
         self._type = phrasetype;
         self._userR = userR;
 
     def get_random_phrase(self):
         return random.choice(self._list);
+
+    def add_phrase(self,phrase):
+        self._list.append(phrase);
+        with open(self._filename,'a') as f:
+            f.write(phrase);
+
 
     def process(self,bot,update):
         self._userR.inc_cmd(update.message.from_user.id,self._cmd);
