@@ -20,8 +20,8 @@ LIST = [
 
 
 class CatGifList(PhraseList):
-    def __init__(self,cmd):
-        super().__init__(cmd,LIST,"gif");
+    def __init__(self,userR,cmd):
+        super().__init__(userR,cmd,LIST,"gif");
 
     def get_max_cmd_response(self,update):
         text = "Nunca hay demasiados gatos! Pide otro "

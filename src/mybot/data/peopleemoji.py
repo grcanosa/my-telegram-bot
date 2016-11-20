@@ -145,8 +145,8 @@ for s in NAMELIST:
     LIST.append(emoji.emojize(s,use_aliases=True));
 
 class PeopleEmoji(PhraseList):
-    def __init__(self,cmd):
-        super().__init__(cmd,LIST,"message");
+    def __init__(self,userR,cmd):
+        super().__init__(userR,cmd,LIST,"message");
         text = "Quieres emoji?, pues toma dos ";
         text += emoji.emojize(":coffee::coffee: \n",use_aliases=True);
         self._response = text;

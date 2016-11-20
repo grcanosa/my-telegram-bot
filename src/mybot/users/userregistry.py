@@ -11,54 +11,11 @@ import shutil
 import logging;
 import os;
 
+from .handlers.user import User;
+
 
 def_max_num_cmd = 3;
-
-class User:
-    def __init__(self):
-        self.user_j = {};
-        self._cmd_num = {};
-
-    def get_id(self):
-        return self.user_j["USER_INFO"]["ID"];
-
-    def get_name(self):
-        return self.user_j["USER_INFO"]["FIRST_NAME"]+" "+self.user_j["USER_INFO"]["LAST_NAME"];
-
-    def get_cmds(self):
-        return self.user_j["CMD_INFO"];
-
-    def fill_from_teluser(self,teluser):
-        user_d = {};
-        user_d["ID"] = teluser.id;
-        user_d["FIRST_NAME"] = teluser.first_name;
-        user_d["LAST_NAME"] = teluser.last_name;
-        user_d["USERNAME"] = teluser.username;
-        user_cmd = {};
-        self.user_j["USER_INFO"] = user_d;
-        self.user_j["CMD_INFO"] = user_cmd;
-
-    def fill_from_json(self,user_j):
-        self.user_j = user_j;
-        for cmd in self.user_j["CMD_INFO"]: self._cmd_num[cmd] = 0;
-
-    def is_cmd_max_num(self,cmd,max_cmd_num = def_max_num_cmd):
-        if self._cmd_num[cmd] == max_cmd_num:
-            self._cmd_num[cmd] = 0;
-            return False;
-        else:
-            return True;
-
-    def inc_cmd(self,cmd):
-        logging.debug("User %d sends command %s",self.get_id(),cmd);
-        if not cmd in self._cmd_num:
-            self._cmd_num[cmd] = 1;
-            self.user_j["CMD_INFO"][cmd] = 1;
-        else:
-            self._cmd_num[cmd] += 1;
-            self.user_j["CMD_INFO"][cmd] += 1;
-
-
+logger = logging.getLogger(__name__);
 
 
 class UserRegistry:
@@ -69,7 +26,7 @@ class UserRegistry:
         #self._usersj = [];
         self._dest_file = dest_file;
         self.load_users_from_reg();
-        logging.debug("Initiating registry with size %d",self._users.__len__());
+        logger.debug("Initiating registry with size %d",self._users.__len__());
 
     def load_users_from_reg(self):
         json_obj = {};
@@ -98,7 +55,7 @@ class UserRegistry:
         self.generate_file();
 
     def exist_user(self,teluser):
-        logging.debug("Checking if %d is in list of size %d",teluser.id,len(self._users));
+        logger.debug("Checking if %d is in list of size %d",teluser.id,len(self._users));
         #print([us.user_j["USER_INFO"]["ID"] for us in self._users]);
         if teluser.id in [us.user_j["USER_INFO"]["ID"] for us in self._users]:
             return True;
@@ -112,7 +69,7 @@ class UserRegistry:
             self._users.append(u);
             self.generate_file();
         else:
-            logging.debug("User %s already in list",update.message.from_user.first_name);
+            logger.debug("User %s already in list",update.message.from_user.first_name);
 
 
     def is_cmd_max_num(self,user_id,cmd):
@@ -135,7 +92,7 @@ class UserRegistry:
                 return us;
 
     def generate_file(self):
-        logging.debug("Generating user file");
+        logger.debug("Generating user file");
         data = [];
         for us in self._users: data.append(us.user_j);
         json_obj={}

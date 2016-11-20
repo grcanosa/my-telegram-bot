@@ -2,6 +2,10 @@
 
 from telegram import Bot;
 from .cmdprocessor import CmdProcessor;
+import logging
+
+logger = logging.getLogger(__name__);
+
 
 class UserStats(CmdProcessor):
     def __init__(self,disp,cmd):
@@ -10,6 +14,7 @@ class UserStats(CmdProcessor):
     def process(self,userR,bot,update):
         ret = False;
         if self.cmd_ok(update.message.text):
+            logger.debug("Returning user stats for user %d",update.message.from_user.id);
             userR.inc_cmd(update.message.from_user.id,self._cmd);
             ret = True;
             text = "";

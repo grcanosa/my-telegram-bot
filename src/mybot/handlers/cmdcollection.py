@@ -10,6 +10,7 @@ from telegram.ext import Updater;
 from telegram.ext import CommandHandler as CH;
 from ..data import peopleemoji as LPEOPLEEMOJI;
 
+logger = logging.getLogger(__name__);
 
 class CmdCollection:
     def __init__(self,userReg,priority = 50):
@@ -20,10 +21,10 @@ class CmdCollection:
 
     def add_cmd(self,dispatcher,cmdprocessor):
         self._cmd_list.append(cmdprocessor);
-        dispatcher.add_handler(CH(cmdprocessor.get_cmd(),self.proc_phrase),self._priority);
+        dispatcher.add_handler(CH(cmdprocessor.get_cmd(),self.process),self._priority);
 
     def proc_phrase(self,bot,update):
-        logging.debug("Received: %s",update.message.text);
+        logger.debug("Received: %s",update.message.text);
         added = False;
         for cmdproc in self._cmd_list:
             if cmdproc.process(self._user_reg,bot,update):

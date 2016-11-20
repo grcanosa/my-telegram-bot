@@ -84,8 +84,8 @@ SARALIST = [
 
 
 class PiropoList(PhraseList):
-    def __init__(self,cmd):
-        super().__init__(cmd,LIST,"message");
+    def __init__(self,userR,cmd):
+        super().__init__(userR,cmd,LIST,"message");
 
     def get_max_cmd_response(self,update):
         text= update.message.from_user.first_name.split()[0];
@@ -96,22 +96,19 @@ class PiropoList(PhraseList):
 
 
 class SaraPiropoList(PhraseList):
-    def __init__(self,cmd):
-        super().__init__(cmd,LIST,"message");
+    def __init__(self,userR,cmd):
+        super().__init__(userR,cmd,LIST,"message");
         self._cid = CID["SARA"]
 
-    def process(self,userR,bot,update):
-        ret = False;
-        if self.cmd_ok(update.message.text):
-            userR.inc_cmd(update.message.from_user.id,self._cmd);
-            if self._cid == update.message.chat_id:
-                bot.send_message(chat_id=self._cid,text="Claro que si lovechu, a ti te mando lo que me pidas!");
-                #bot.send_message(chat_id=self._cid,text=self.get_random_phrase());
-                bot.send_message(chat_id=self._cid,text=random.choice(SARALIST));
-            else:
-                bot.send_message(chat_id=update.message.chat_id,text="Lo siento, las cosas realmente bonitas solo se las digo a una persona...");
-            ret = True;
-        return ret;
+    def process(self,bot,update):
+        userR.inc_cmd(update.message.from_user.id,self._cmd);
+        if self._cid == update.message.chat_id:
+            bot.send_message(chat_id=self._cid,text="Claro que si lovechu, a ti te mando lo que me pidas!");
+            #bot.send_message(chat_id=self._cid,text=self.get_random_phrase());
+            bot.send_message(chat_id=self._cid,text=random.choice(SARALIST));
+        else:
+            bot.send_message(chat_id=update.message.chat_id,text="Lo siento, las cosas realmente bonitas solo se las digo a una persona...");
+
 
     def get_max_cmd_response(self,update):
         return "","";
