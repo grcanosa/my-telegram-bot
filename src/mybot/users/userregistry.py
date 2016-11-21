@@ -11,8 +11,7 @@ import shutil
 import logging;
 import os;
 
-from .handlers.user import User;
-
+from .user import User;
 
 def_max_num_cmd = 3;
 logger = logging.getLogger(__name__);
@@ -31,7 +30,7 @@ class UserRegistry:
     def load_users_from_reg(self):
         json_obj = {};
         if os.path.isfile(self._dest_file):
-            logging.debug("Loading from file");
+            logger.debug("Loading from file %s",self._dest_file);
             with open(self._dest_file,'r') as f:
                 json_obj = json.load(f);
         if "USER_LIST" in json_obj:
@@ -92,8 +91,9 @@ class UserRegistry:
                 if us.get_id() == user_id:
                     return us;
         if name is not "":
+            logger.debug("Trying to find user %s",name);
             for us in self._users:
-                if us.get_name is name:
+                if us.get_name() == name:
                     return us;
         return None;
 

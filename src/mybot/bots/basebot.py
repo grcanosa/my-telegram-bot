@@ -10,14 +10,14 @@ class BaseBot:
     def __init__(self,token):
         self._token = token;
         self._updater = Updater(self._token);
-        self._disp = self._up.dispatcher;
-        self._bot = self._up.bot;
+        self._disp = self._updater.dispatcher;
+        self._bot = self._updater.bot;
 
     def start(self):
-        self._up.start_polling();
+        self._updater.start_polling();
 
     def stop(self):
-        self._up.stop();
+        self._updater.stop();
 
     def idle(self):
-        self._up.idle();
+        self._updater.idle();

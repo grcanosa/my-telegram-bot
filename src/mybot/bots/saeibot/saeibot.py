@@ -18,6 +18,10 @@ import logging;
 # from ...handlers.admincmds import BroadcastCmd;
 # from ..basebot import BaseBot;
 
+from ...users.userregistry import UserRegistry;
+
+from ..tokens import TOKEN
+
 from ..basebot import BaseBot;
 
 from ...handler.piropos import PiropoList;
@@ -36,12 +40,12 @@ class SaeibotBot(BaseBot):
         self.install_handlers();
 
     def install_handlers(self):
-        self._userR.install(self._up);
+        self._userR.install(self._updater);
         PiropoList(cmdget="piropo",cmdadd="addpiropo",
                     filename=self._datafolder+"/saei/piropos.txt",
                     updater=self._updater,userR=self._userR,priority=50);
 
-        PiropoList(cmdget="cat",cmdadd="",
+        CatGifList(cmdget="cat",cmdadd="",
                     filename=self._datafolder+"/saei/cats",
                     updater=self._updater,userR=self._userR,priority=50);
 

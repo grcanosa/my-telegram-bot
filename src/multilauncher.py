@@ -7,8 +7,8 @@ import multiprocessing as mp;
 import logging;
 import optparse;
 
-import mybot.bots.nextcall.nextcallbot as nextcallbot;
-import mybot.bots.sepsabot.sepsabot as sepsabot
+#import mybot.bots.nextcall.nextcallbot as nextcallbot;
+#import mybot.bots.sepsabot.sepsabot as sepsabot
 import mybot.bots.saeibot.saeibot as saeibot
 
 
@@ -28,8 +28,8 @@ class MultiLauncher:
 
     def __init__(self,logfolder="",datafolder=""):
         self._bots_f = [];
-        self._bots_f.append(BotFun(nextcallbot.main,"nextcall_bot"))
-        self._bots_f.append(BotFun(sepsabot.main,"sepsabot"));
+        #self._bots_f.append(BotFun(nextcallbot.main,"nextcall_bot"))
+        #self._bots_f.append(BotFun(sepsabot.main,"sepsabot"));
         self._bots_f.append(BotFun(saeibot.main,"saeibot"));
         #self._bots_f.append([sepsabot.main,"sepsabot"])
         self._bots_p = [];
@@ -62,6 +62,7 @@ def parse_args(argv):
     parser.add_option("--logfolder",help="Folder where the logs should be generated",default="",dest="logfolder")
     parser.add_option("--datafolder",help="Folder where the data is going to be looked for",default="",dest="datafolder")
     parser.add_option("--b",help="Name of the bot to launch",action="append",dest="bots")
+    parser.add_option("--debug",help="Use debug mode",default=False,action="store_true",dest="debug_flag");
     options,args = parser.parse_args(argv);
     if options.bots is None:
         options.bots = [];
@@ -74,7 +75,10 @@ def main(argv):
     op = parse_args(argv);
     print("Using logfolder: ",op.logfolder)
     log_format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(format=log_format,level=logging.WARNING)
+    if op.debug_flag:
+        logging.basicConfig(format=log_format,level=logging.DEBUG)
+    else:
+        logging.basicConfig(format=log_format,level=logging.WARNING)
     mp.set_start_method('fork')
     botlaunch = MultiLauncher(op.logfolder,op.datafolder);
     signal.signal(signal.SIGINT, botlaunch.terminate);
