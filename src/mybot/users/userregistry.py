@@ -86,10 +86,18 @@ class UserRegistry:
         else:
             return True;
 
-    def get_user(self,user_id):
-        for us in self._users:
-            if us.get_id() == user_id:
-                return us;
+    def get_user(self,user_id=0,name=""):
+        if user_id is not 0:
+            for us in self._users:
+                if us.get_id() == user_id:
+                    return us;
+        if name is not "":
+            for us in self._users:
+                if us.get_name is name:
+                    return us;
+        return None;
+
+
 
     def generate_file(self):
         logger.debug("Generating user file");

@@ -9,7 +9,7 @@ from telegram.ext import Updater;
 class BaseBot:
     def __init__(self,token):
         self._token = token;
-        self._up = Updater(self._token);
+        self._updater = Updater(self._token);
         self._disp = self._up.dispatcher;
         self._bot = self._up.bot;
 

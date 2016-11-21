@@ -20,7 +20,8 @@ import logging;
 
 from ..basebot import BaseBot;
 
-from ...randomhanlders.piropos import PiropoList;
+from ...handler.piropos import PiropoList;
+from .catgifs import CatGifList;
 
 logger = logging.getLogger(__name__);
 
@@ -32,18 +33,17 @@ class SaeibotBot(BaseBot):
         self._logFile = logfolder+"/saeii.users.reg";
         self._datafolder = datafolder;
         self._userR = UserRegistry(self._logFile)
-        self.handlers = [];
-        self._HD.up = self._up;
-        self._HD.userR = self._userR;
-        self._HD.datafolder = self._datafolder;
         self.install_handlers();
 
     def install_handlers(self):
         self._userR.install(self._up);
-        #self._userR.install_handler(self._disp);
+        PiropoList(cmdget="piropo",cmdadd="addpiropo",
+                    filename=self._datafolder+"/saei/piropos.txt",
+                    updater=self._updater,userR=self._userR,priority=50);
 
-        self.handlers.append(PiropoList("get","add",self._HD));
-
+        PiropoList(cmdget="cat",cmdadd="",
+                    filename=self._datafolder+"/saei/cats",
+                    updater=self._updater,userR=self._userR,priority=50);
 
 
 

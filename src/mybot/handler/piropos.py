@@ -9,8 +9,13 @@ from telegram import Bot,Update;
 
 
 class PiropoList(PhraseList):
-    def __init__(self,cmdget,cmdadd,HD):
-        super().__init__(userR,cmdget,cmdadd,HD);
+    def __init__(self,cmdget = "",
+                      cmdadd="",
+                      filename ="",
+                      updater=None,
+                      userR = None,
+                      priority = 50):
+        super().__init__(cmdget=cmdget,cmdadd=cmdadd,filename=filename,updater=updater,userR=userR,priority=priority);
 
     def get_max_cmd_response(self,update):
         text= update.message.from_user.first_name.split()[0];
