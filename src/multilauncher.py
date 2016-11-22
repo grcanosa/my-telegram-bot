@@ -10,6 +10,7 @@ import optparse;
 #import mybot.bots.nextcall.nextcallbot as nextcallbot;
 #import mybot.bots.sepsabot.sepsabot as sepsabot
 import mybot.bots.saeibot.saeibot as saeibot
+import mybot.bots.grcanosabot.grcanosabot as grcanosabot
 
 
 class BotFun:
@@ -31,6 +32,7 @@ class MultiLauncher:
         #self._bots_f.append(BotFun(nextcallbot.main,"nextcall_bot"))
         #self._bots_f.append(BotFun(sepsabot.main,"sepsabot"));
         self._bots_f.append(BotFun(saeibot.main,"saeibot"));
+        self._bots_f.append(BotFun(grcanosabot.main,"grcanosabot"));
         #self._bots_f.append([sepsabot.main,"sepsabot"])
         self._bots_p = [];
         self._logfolder = logfolder;

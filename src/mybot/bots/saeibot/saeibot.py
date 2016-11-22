@@ -2,22 +2,6 @@
 
 import logging;
 
-#TELEGRAM IMPORTS
-# from telegram.ext import Updater;
-# from telegram.ext import MessageHandler,Filters
-#
-# from ...data.teletokens import TOKEN,CID;
-# from ...data.peopleemoji import PeopleEmoji;
-# from ...data.piropos import PiropoList,SaraPiropoList;
-# from ...data.catgifs import CatGifList;
-#
-# from ...handlers.userregistry import UserRegistry;
-# from ...handlers.cmdcollection import CmdCollection;
-# from ...handlers.fixedresponse import FixedResponse;
-# from ...handlers.userstats import UserStats;
-# from ...handlers.admincmds import BroadcastCmd;
-# from ..basebot import BaseBot;
-
 from ...users.userregistry import UserRegistry;
 
 from ..tokens import TOKEN

@@ -93,7 +93,7 @@ class UserRegistry:
         if name is not "":
             logger.debug("Trying to find user %s",name);
             for us in self._users:
-                if us.get_name() == name:
+                if us.get_name().lower() == name.lower():
                     return us;
         return None;
 
