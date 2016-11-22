@@ -1,6 +1,6 @@
 #/!usr/bin/python3
 
-from ...handler.phraselist import PhraseList;
+from .phraselist import PhraseList;
 
 
 class CatGifList(PhraseList):

@@ -11,7 +11,7 @@ from ..basebot import BaseBot;
 from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from ...handler.randomemoji import RandomEmoji;
-from .catgifs import CatGifList;
+from ...handler.catgifs import CatGifList;
 from .sarapiropos import SaraPiropoList
 
 logger = logging.getLogger(__name__);

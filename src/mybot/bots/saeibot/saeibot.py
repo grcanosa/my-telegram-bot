@@ -31,7 +31,7 @@ class SaeibotBot(BaseBot):
                     updater=self._updater,userR=self._userR,priority=50);
 
         CatGifList(cmdget="cat",cmdadd="",
-                    filename=self._datafolder+"/saei/cats",
+                    filename=self._datafolder+"/cats",
                     updater=self._updater,userR=self._userR,priority=50);
 
         FixedResponse(cmd="help",response=self.get_help(),

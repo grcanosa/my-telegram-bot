@@ -1,57 +1,65 @@
 #!/usr/bin/python3
 
-#TELEGRAM IMPORTS
-from telegram.ext import Updater;
-from telegram.ext import MessageHandler,Filters
+import logging;
+import emoji;
+from ...users.userregistry import UserRegistry;
 
-from ...data.teletokens import TOKEN,CID;
-from ...data.peopleemoji import PeopleEmoji;
-from ...data.piropos import PiropoList,SaraPiropoList;
-from ...data.catgifs import CatGifList;
+from ..tokens import TOKEN
 
-from ...handlers.userregistry import UserRegistry;
-from ...handlers.cmdcollection import CmdCollection;
-from ...handlers.fixedresponse import FixedResponse;
-from ...handlers.userstats import UserStats;
-from ...handlers.admincmds import BroadcastCmd;
 from ..basebot import BaseBot;
-from ...data import sepsa as DSEPSA;
 
+from ...handler.piropos import PiropoList;
+from ...handler.fixedresponse import FixedResponse;
+from ...handler.catgifs import CatGifList;
+from .sepsianadas import SepsianadaList;
+
+logger = logging.getLogger(__name__);
 
 
 
 class SepsaBot(BaseBot):
-    def __init__(self,logfolder):
-        super().__init__(TOKEN["SEPSABOT"]);
+    def __init__(self,logfolder,datafolder):
+        super().__init__(TOKEN["GRCANOSABOT"]);
         self._logFile = logfolder+"/sepsabot.users.reg";
+        self._datafolder = datafolder;
         self._userR = UserRegistry(self._logFile)
-        self._cmdC5 = CmdCollection(self._userR,5);
-        self._cmdC10 = CmdCollection(self._userR,10);
         self.install_handlers();
 
     def install_handlers(self):
-        self._userR.install(self._up);
-        #self._userR.install_handler(self._disp);
+        self._userR.install(self._updater);
+        PiropoList(cmdget="piropo",cmdadd="addpiropo",
+                    filename=self._datafolder+"/sepsabot/piropos.txt",
+                    updater=self._updater,userR=self._userR,priority=50);
+
+        SepsianadaList(cmdget="sepsianada",cmdadd="addsepsianada",
+                    filename=self._datafolder+"/sepsabot/sepsianadas.txt",
+                    updater=self._updater,userR=self._userR,priority=50);
+
+        CatGifList(cmdget="cat",cmdadd="",
+                    filename=self._datafolder+"/cats",
+                    updater=self._updater,userR=self._userR,priority=50);
+
+        FixedResponse(cmd="help",response=self.get_help(),
+                        updater=self._updater,userR=self._userR,priority=50);
+
+        FixedResponse(cmd="sepsa",response=emoji.emojize(":hocho::sweat_smile::speech_balloon: SEPSA, el mejor lugar para trabajar!!",use_aliases=True),
+                        updater=self._updater,userR=self._userR,priority=50);
 
 
-        self._cmdC10.add_cmd(self._disp,BroadcastCmd("broadcast",CID["GONZALO"]));
-
-        #self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"));
-        self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"start","Hola, soy SepsaBot, usa un comando para probarme","message"));
-        self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"sepsa",DSEPSA.sepsa_is_great_msg,"message"))
-        self._cmdC10.add_cmd(self._disp,UserStats(self._disp,"stats"));
-        self._cmdC10.add_cmd(self._disp,PeopleEmoji("randomemoji"));
-        self._cmdC10.add_cmd(self._disp,PiropoList("dimealgobonito"));
-        #self._cmdC10.add_cmd(self._disp,SaraPiropoList("dimealgorealmentebonito"));
-        #self._cmdC10.add_cmd(self._disp,CatGifList("cat"));
-        self._disp.add_handler(MessageHandler(Filters.command, self._cmdC10.proc_phrase),10);
 
 
+    def get_help(self):
+        text = "Soy sepsabot, y esto es lo que puedo hacer: \n";
+        text += "/sepsa - Para saber más... \n";
+        text += "/sepsianada - Sepsianada al azar"
+        text += "/addsepsianada - Añadir sepsianada a la lista \n";
+        text += "/piropo - Pide un piropo \n";
+        text += "/piropo Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
+        text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/cat - Pide un gato!! \n";
+        return text;
 
-
-
-
-def main(logfolder = "",*args, **kw):
-    n = SepsaBot(logfolder);
+def main(*args, **kw):
+    n = SepsaBot(kw["logfolder"],kw["datafolder"]);
     n.start();
     n.idle();
