@@ -10,6 +10,7 @@ from ..basebot import BaseBot;
 
 from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
+from ...handler.randomemoji import RandomEmoji;
 from .catgifs import CatGifList;
 from .saeiresp import SaeiResp;
 
@@ -38,6 +39,10 @@ class SaeibotBot(BaseBot):
         FixedResponse(cmd="help",response=self.get_help(),
                         updater=self._updater,userR=self._userR,priority=50);
 
+        RandomEmoji(cmdget="randomemoji",cmdadd="addemoji",
+                    filename=self._datafolder+"/emojis.txt",
+                    updater=self._updater,userR=self._userR,priority=50);
+
         SaeiResp(updater=self._updater,userR=self._userR,priority=50);
 
     def get_help(self):
@@ -46,6 +51,8 @@ class SaeibotBot(BaseBot):
         text += "/piropo - Pide un piropo \n";
         text += "/piropo Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
         text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/randomemoji - Pide un emoji aleatorio \n";
+        text += "/addemoji EMOJI A AÑADIR -  Añade un emoji a la lista \n";
         text += "/cat - Pide un gato!! \n";
         return text;
 
