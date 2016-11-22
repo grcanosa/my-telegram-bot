@@ -9,6 +9,7 @@ from ..tokens import TOKEN
 from ..basebot import BaseBot;
 
 from ...handler.piropos import PiropoList;
+from ...handler.fixedresponse import FixedResponse;
 from .catgifs import CatGifList;
 
 logger = logging.getLogger(__name__);
@@ -33,7 +34,17 @@ class SaeibotBot(BaseBot):
                     filename=self._datafolder+"/saei/cats",
                     updater=self._updater,userR=self._userR,priority=50);
 
+        FixedResponse(cmd="help",response=self.get_help(),
+                        updater=self._updater,userR=self._userR,priority=50);
 
+
+    def get_help(self):
+        text = "Soy saeiiiiibot, y esto es lo que puedo hacer: \n";
+        text += "/piropo - Pide un piropo \n";
+        text += "/piropo Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
+        text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/cat - Pide un gato!! \n";
+        return text;
 
 def main(*args, **kw):
     n = SaeibotBot(kw["logfolder"],kw["datafolder"]);
