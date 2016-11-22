@@ -11,6 +11,7 @@ from ..basebot import BaseBot;
 from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from .catgifs import CatGifList;
+from .saeiresp import SaeiResp;
 
 logger = logging.getLogger(__name__);
 
@@ -37,9 +38,11 @@ class SaeibotBot(BaseBot):
         FixedResponse(cmd="help",response=self.get_help(),
                         updater=self._updater,userR=self._userR,priority=50);
 
+        SaeiResp(updater=self._updater,userR=self._userR,priority=50);
 
     def get_help(self):
         text = "Soy saeiiiiibot, y esto es lo que puedo hacer: \n";
+        text += "/saei - ¿? ;)"
         text += "/piropo - Pide un piropo \n";
         text += "/piropo Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
         text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";

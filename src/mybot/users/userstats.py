@@ -7,9 +7,11 @@ import logging
 logger = logging.getLogger(__name__);
 
 
-class UserStats(CmdProcessor):
-    def __init__(self,disp,cmd):
-        super().__init__(cmd);
+class UserStats:
+    def __init__(self,updater=None,userR=None):
+        self._updater=updater;
+        self._userR = userR;
+
 
     def process(self,userR,bot,update):
         ret = False;
