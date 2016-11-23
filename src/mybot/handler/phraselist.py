@@ -70,7 +70,9 @@ class PhraseList:
             if us is not None:
                 bot.send_message(chat_id=update.message.chat_id,text="Send to "+msgspli+" correct");
                 bot.send_message(chat_id=us.get_id(),text=self._userR.get_user(user_id=update.message.from_user.id).get_name()+" sends this to you:")
-                self.send_random(bot,us.get_id());
+                phr= self.send_random(bot,us.get_id());
+                if phr is not None:
+                    bot.send_message(chat_id=update.message.chat_id,text=phr);
             else:
                 bot.send_message(chat_id=update.message.chat_id,text="User "+msgspli+" not recognized");
         else:
@@ -94,11 +96,14 @@ class PhraseList:
 
     def send_random(self,bot,user_id):
         if self._type == "message":
-            bot.send_message(chat_id=user_id,text=self.get_random_phrase());
+            phr = self.get_random_phrase();
+            bot.send_message(chat_id=user_id,text=phr);
+            return phr;
         elif self._type == "gif":
             file = self.get_random_phrase();
             logger.debug("Sending file %s",file)
             bot.send_document(chat_id=user_id,document=open(file,'rb'))
+        return None;
 
 
     # def process(self,bot,update):

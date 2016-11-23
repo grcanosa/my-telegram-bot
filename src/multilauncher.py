@@ -91,6 +91,10 @@ def main(argv):
     else:
         logging.basicConfig(format=log_format,level=logging.WARNING)
     mp.set_start_method('fork')
+    if op.logfolder[-1] == "/":
+        op.logfolder = op.logfolder[:-1];
+    if op.datafolder[-1] == "/":
+        op.datafolder = op.datafolder[:-1];
     botlaunch = MultiLauncher(op.logfolder,op.datafolder);
     signal.signal(signal.SIGINT, botlaunch.terminate);
     signal.signal(signal.SIGTERM,botlaunch.terminate);
