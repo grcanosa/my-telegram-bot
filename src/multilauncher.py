@@ -3,6 +3,7 @@
 import subprocess;
 import signal
 import sys
+import os;
 import multiprocessing as mp;
 import logging;
 import optparse;
@@ -39,6 +40,7 @@ class MultiLauncher:
         self._bots_p = [];
         self._logfolder = logfolder;
         self._datafolder = datafolder;
+        self._terminate_first = False;
 
 
     def start(self,botsnames):
@@ -57,10 +59,13 @@ class MultiLauncher:
 
 
     def terminate(self,signal,frame):
+        if(self._terminate_first):
+            os.system("killall -9 multilauncher.py");
         print("Received "+str(signal))
         for bp in self._bots_p:
             print("Terminating "+bp.name+" with pid: "+str(bp.proc.pid));
             bp.proc.terminate();
+        self._terminate_first = True;
 
 
 def parse_args(argv):
