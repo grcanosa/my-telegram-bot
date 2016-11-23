@@ -3,8 +3,9 @@
 import logging;
 
 from ...users.userregistry import UserRegistry;
+from ...users.userstats import UserStats;
 
-from ..tokens import TOKEN
+from ..tokens import TOKEN,CID
 
 from ..basebot import BaseBot;
 
@@ -23,11 +24,14 @@ class GrcanosaBot(BaseBot):
         super().__init__(TOKEN["GRCANOSABOT"]);
         self._logFile = logfolder+"/grcanosa.users.reg";
         self._datafolder = datafolder;
-        self._userR = UserRegistry(self._logFile)
+        self._userR = UserRegistry(self._logFile,admin_cid=CID["GONZALO"])
         self.install_handlers();
 
     def install_handlers(self):
         self._userR.install(self._updater);
+
+        UserStats(cmd="stats",updater=self._updater,userR=self._userR,priority=50);
+
         PiropoList(cmdget="dimealgobonito",cmdadd="addpiropo",
                     filename=self._datafolder+"/grcanosabot/piropos.txt",
                     updater=self._updater,userR=self._userR,priority=50);

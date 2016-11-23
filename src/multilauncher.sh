@@ -8,7 +8,8 @@ stop)
     echo "Stop Bots"
     killall multilauncher.py
     #kill "`cat /tmp/telegrambots.pid`"
-    sleep 10
+    sleep 30
+    killall -9 multilauncher.py
     killall -9 multilauncher.py
     ;;
 start)
@@ -16,12 +17,12 @@ start)
 	  path=$(dirname $symlink)
 	  echo $path
     mkdir -p $path/log
-	  $path/multilauncher.py --logfolder=$path/log &
+	  $path/multilauncher.py --logfolder=$path/data/log --datafolder=$path/data &
     #echo $! > /tmp/telegrambots.pid
     ;;
 restart)
     $0 stop
-    sleep 1
+    sleep 2
     $0 start
     ;;
 *)

@@ -5,6 +5,7 @@ from telegram import Update;
 from telegram.ext import Job;
 from telegram.ext import Updater;
 from telegram.ext import MessageHandler,Filters;
+from telegram.ext import CommandHandler
 import random;
 import json
 import shutil
@@ -20,10 +21,11 @@ logger = logging.getLogger(__name__);
 class UserRegistry:
 
 
-    def __init__(self,dest_file = "users.reg"):
+    def __init__(self,dest_file = "users.reg",admin_cid=0):
         self._users = [];
         #self._usersj = [];
         self._dest_file = dest_file;
+        self._admin_cid = admin_cid;
         self.load_users_from_reg();
         logger.debug("Initiating registry with size %d",self._users.__len__());
 
@@ -45,6 +47,7 @@ class UserRegistry:
 
     def install_handler(self,dispatcher):
         dispatcher.add_handler(MessageHandler(Filters.all, self.proc_msg),0);
+        dispatcher.add_handler(CommandHandler("generatestats",self.proc_generate),1);
 
     def install_periodic_job(self,jobqeue):
         j = Job(self.periodic_job_callback, 3600);
@@ -70,6 +73,12 @@ class UserRegistry:
         else:
             logger.debug("User %s already in list",update.message.from_user.first_name);
 
+    def proc_generate(self,bot,update):
+        if update.message.from_user.id == self._admin_cid:
+            self.generate_file();
+            bot.send_message(chat_id=update.message.chat_id,text="File generated OK");
+        else:
+            bot.send_message(chat_id=update.message.chat_id,text="You are not authorized!");
 
     def is_cmd_max_num(self,user_id,cmd):
         u = self.get_user(user_id);

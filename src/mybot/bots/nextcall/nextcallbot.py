@@ -1,55 +1,66 @@
 #!/usr/bin/python3
 
-#TELEGRAM IMPORTS
-from telegram.ext import Updater;
-from telegram.ext import MessageHandler,Filters
+import logging;
 
-from ...data.teletokens import TOKEN,CID;
-from ...data.peopleemoji import PeopleEmoji;
-from ...data.piropos import PiropoList,SaraPiropoList;
-from ...data.catgifs import CatGifList;
+from ...users.userregistry import UserRegistry;
 
-from ...handlers.userregistry import UserRegistry;
-from ...handlers.cmdcollection import CmdCollection;
-from ...handlers.fixedresponse import FixedResponse;
-from ...handlers.userstats import UserStats;
-from ...handlers.admincmds import BroadcastCmd;
+from ..tokens import TOKEN
+
 from ..basebot import BaseBot;
 
+from ...handler.piropos import PiropoList;
+from ...handler.fixedresponse import FixedResponse;
+from ...handler.randomemoji import RandomEmoji;
+from ...handler.catgifs import CatGifList;
+from .sarapiropos import SaraPiropoList
+
+logger = logging.getLogger(__name__);
 
 
 
 class NextCallBot(BaseBot):
-    def __init__(self,logfolder):
-        super().__init__(TOKEN["NEXTCALL_BOT"]);
-        self._logFile = logfolder+"/nextcall.users.reg";
+    def __init__(self,logfolder,datafolder):
+        super().__init__(TOKEN["NEXTCALL_+¡BOT"]);
+        self._logFile = logfolder+"/grcanosa.users.reg";
+        self._datafolder = datafolder;
         self._userR = UserRegistry(self._logFile)
-        self._cmdC5 = CmdCollection(self._userR,5);
-        self._cmdC10 = CmdCollection(self._userR,10);
         self.install_handlers();
 
     def install_handlers(self):
-        self._userR.install(self._up);
-        #self._userR.install_handler(self._disp);
+        self._userR.install(self._updater);
+        PiropoList(cmdget="piropo",cmdadd="addpiropo",
+                    filename=self._datafolder+"/grcanosabot/piropos.txt",
+                    updater=self._updater,userR=self._userR,priority=50);
+
+        CatGifList(cmdget="cat",cmdadd="",
+                    filename=self._datafolder+"/cats",
+                    updater=self._updater,userR=self._userR,priority=50);
+
+        RandomEmoji(cmdget="randomemoji",cmdadd="addemoji",
+                    filename=self._datafolder+"/emojis.txt",
+                    updater=self._updater,userR=self._userR,priority=50);
+
+        FixedResponse(cmd="help",response=self.get_help(),
+                        updater=self._updater,userR=self._userR,priority=50);
+
+        FixedResponse(cmd="start",response="Hola, soy nextcall_bot, escribe /help para ver que puedo hacer",
+                        updater=self._updater,userR=self._userR,priority=50);
 
 
-        self._cmdC10.add_cmd(self._disp,BroadcastCmd("broadcast",CID["GONZALO"]));
 
-        self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"help","AwADBAADJwAD15TmAAG3Lbh5kdhR6QI","voice"));
-        self._cmdC10.add_cmd(self._disp,FixedResponse(self._disp,"start","Hola, soy NextCallBot, usa un comando para probarme","message"));
-        self._cmdC10.add_cmd(self._disp,UserStats(self._disp,"stats"));
-        self._cmdC10.add_cmd(self._disp,PeopleEmoji("randomemoji"));
-        self._cmdC10.add_cmd(self._disp,PiropoList("dimealgobonito"));
-        self._cmdC10.add_cmd(self._disp,SaraPiropoList("dimealgorealmentebonito"));
-        self._cmdC10.add_cmd(self._disp,CatGifList("cat"));
-        self._disp.add_handler(MessageHandler(Filters.command, self._cmdC10.proc_phrase),10);
-
-
+    def get_help(self):
+        text = "Soy nextcall_bot, y esto es lo que puedo hacer: \n";
+        text += "/piropo - Pide un piropo, o seguido de Nombre Apellidos manda un piropo a otra persona \n";
+        text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/randomemoji - Pide un emoji aleatorio \n";
+        #text += "/addemoji EMOJI A AÑADIR -  Añade un emoji a la lista \n";
+        text += "/cat - Pide un gato!! \n";
+        text += "/help - Ayuda \n";
+        return text;
 
 
 
-
-def main(logfolder = "",*args, **kw):
-    n = NextCallBot(logfolder);
+def main(*args, **kw):
+    n = NextcallBot(kw["logfolder"],kw["datafolder"]);
     n.start();
     n.idle();
