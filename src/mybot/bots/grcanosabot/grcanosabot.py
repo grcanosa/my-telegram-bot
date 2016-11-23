@@ -55,12 +55,13 @@ class GrcanosaBot(BaseBot):
 
     def get_help(self):
         text = "Soy grcanosabot, y esto es lo que puedo hacer: \n";
-        text += "/dimealgobonito - Pide un piropo \n";
-        text += "/dimealgobonito Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
-        text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/help - Muestra esta ayuda. \n";
+        text += "/dimealgobonito - Pide un piropo, o si añades Nombre Apellidos manda un piropo a otra persona. \n";
+        text += "/addpiropo - Añade un piropo a la lista escribiendo el piropo después del comando.\n";
         text += "/randomemoji - Pide un emoji aleatorio \n";
-        text += "/addemoji EMOJI A AÑADIR -  Añade un emoji a la lista \n";
+        #text += "/addemoji EMOJI A AÑADIR -  Añade un emoji a la lista \n";
         text += "/cat - Pide un gato!! \n";
+
         return text;
 
 

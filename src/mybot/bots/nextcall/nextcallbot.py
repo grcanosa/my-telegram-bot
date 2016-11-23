@@ -8,6 +8,7 @@ from ..tokens import TOKEN
 
 from ..basebot import BaseBot;
 
+from ...handler.admincmds import BroadcastCmd;
 from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from ...handler.randomemoji import RandomEmoji;
@@ -20,7 +21,7 @@ logger = logging.getLogger(__name__);
 
 class NextCallBot(BaseBot):
     def __init__(self,logfolder,datafolder):
-        super().__init__(TOKEN["NEXTCALL_+¡BOT"]);
+        super().__init__(TOKEN["NEXTCALL_BOT"]);
         self._logFile = logfolder+"/grcanosa.users.reg";
         self._datafolder = datafolder;
         self._userR = UserRegistry(self._logFile)
@@ -28,6 +29,10 @@ class NextCallBot(BaseBot):
 
     def install_handlers(self):
         self._userR.install(self._updater);
+
+        BroadcastCmd(updater=self._updater,userR=self._userR,admin_cid=CID["GONZALO"],
+                    priority=50);
+
         PiropoList(cmdget="piropo",cmdadd="addpiropo",
                     filename=self._datafolder+"/grcanosabot/piropos.txt",
                     updater=self._updater,userR=self._userR,priority=50);

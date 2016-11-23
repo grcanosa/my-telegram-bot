@@ -4,10 +4,11 @@ import logging;
 import emoji;
 from ...users.userregistry import UserRegistry;
 
-from ..tokens import TOKEN
+from ..tokens import TOKEN,CID
 
 from ..basebot import BaseBot;
 
+from ...handler.admincmds import BroadcastCmd;
 from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from ...handler.catgifs import CatGifList;
@@ -27,6 +28,10 @@ class SepsaBot(BaseBot):
 
     def install_handlers(self):
         self._userR.install(self._updater);
+
+        BroadcastCmd(updater=self._updater,userR=self._userR,admin_cid=CID["GONZALO"],
+                    priority=50);
+
         PiropoList(cmdget="piropo",cmdadd="addpiropo",
                     filename=self._datafolder+"/sepsabot/piropos.txt",
                     updater=self._updater,userR=self._userR,priority=50);

@@ -4,10 +4,11 @@ import logging;
 
 from ...users.userregistry import UserRegistry;
 
-from ..tokens import TOKEN
+from ..tokens import TOKEN,CID
 
 from ..basebot import BaseBot;
 
+from ...handler.admincmds import BroadcastCmd;
 from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from ...handler.randomemoji import RandomEmoji;
@@ -28,6 +29,10 @@ class SaeibotBot(BaseBot):
 
     def install_handlers(self):
         self._userR.install(self._updater);
+
+        BroadcastCmd(updater=self._updater,userR=self._userR,admin_cid=CID["GONZALO"],
+                    priority=50);
+
         PiropoList(cmdget="piropo",cmdadd="addpiropo",
                     filename=self._datafolder+"/saei/piropos.txt",
                     updater=self._updater,userR=self._userR,priority=50);
@@ -47,13 +52,11 @@ class SaeibotBot(BaseBot):
 
     def get_help(self):
         text = "Soy saeiiiiibot, y esto es lo que puedo hacer: \n";
-        text += "/saei - ¿? ;)"
-        text += "/piropo - Pide un piropo \n";
-        text += "/piropo Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
-        text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/saei - ¿? ;) \n"
+        text += "/piropo - Pide un piropo o, añadiendo Nombre Apellidos, manda un piropo a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
+        text += "/addpiropo - Añade un piropo a la lista. Ej: /piropo Que bien te veo! \n";
         text += "/randomemoji - Pide un emoji aleatorio \n";
-        text += "/addemoji EMOJI A AÑADIR -  Añade un emoji a la lista \n";
-        text += "/cat - Pide un gato!! \n";
+        text += "/cat - !!! \n";
         return text;
 
 def main(*args, **kw):
