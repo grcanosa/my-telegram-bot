@@ -13,6 +13,7 @@ import optparse;
 import mybot.bots.saeibot.saeibot as saeibot
 import mybot.bots.grcanosabot.grcanosabot as grcanosabot
 import mybot.bots.sepsabot.sepsabot as sepsabot
+import mybot.bots.rocierosbot.rocierosbot as rocierosbot;
 
 
 class BotFun:
@@ -36,6 +37,7 @@ class MultiLauncher:
         self._bots_f.append(BotFun(saeibot.main,"saeibot"));
         self._bots_f.append(BotFun(grcanosabot.main,"grcanosabot"));
         self._bots_f.append(BotFun(sepsabot.main,"sepsabot"));
+        self._bots_f.append(BotFun(rocierosbot.main,"rocierosbot"));
         #self._bots_f.append([sepsabot.main,"sepsabot"])
         self._bots_p = [];
         self._logfolder = logfolder;

@@ -19,7 +19,7 @@ class SesionesList(TimeUntil):
                         userR=userR,
                         filename=filename,
                         priority=priority);
-        self._name = name;
+
 
 
     def get_response_text(self,t,tnow):
@@ -30,7 +30,7 @@ class SesionesList(TimeUntil):
         text += ".\n "
         # text += "\n";
         # text += happy;
-        text += "\n";
+        #text += "\n";
         text += " Quedan ";
         diffS = t-tnow;
         days = diffS // (24*3600);

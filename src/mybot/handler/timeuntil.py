@@ -68,5 +68,6 @@ class TimeUntil:
             if t > tnow:
                 send = True;
                 bot.send_message(chat_id=update.message.chat_id,text=self.get_response_text(t,tnow));
+                break;
         if not send:
             bot.send_message(chat_id=update.message.chat_id,text="No hay eventos a la vista...");

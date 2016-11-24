@@ -15,5 +15,5 @@ class CatGifList(PhraseList):
 
     def get_max_cmd_response(self,update):
         text = "Saeiiiii, más y más gatos... "
-        text += update.message.from_user.first_name.split()[0];
+        #text += update.message.from_user.first_name.split()[0];
         return text,"message";

@@ -47,6 +47,9 @@ class SaeibotBot(BaseBot):
         FixedResponse(cmd="help",response=self.get_help(),
                         updater=self._updater,userR=self._userR,priority=50);
 
+        FixedResponse(cmd="start",response=self.get_help(),
+                        updater=self._updater,userR=self._userR,priority=50);
+
         RandomEmoji(cmdget="randomemoji",cmdadd="addemoji",
                     filename=self._datafolder+"/emojis.txt",
                     updater=self._updater,userR=self._userR,priority=50);
@@ -56,17 +59,21 @@ class SaeibotBot(BaseBot):
         BodaResp(updater=self._updater,userR=self._userR,priority=50,
                   name="Laura",filename=self._datafolder+"/saei/bodalaura.txt");
 
+        BodaResp(updater=self._updater,userR=self._userR,priority=50,
+                  name="Elena",filename=self._datafolder+"/saei/bodaelena.txt",alt_resp=True);
 
 
     def get_help(self):
         text = "Soy saeiiiiibot, y esto es lo que puedo hacer: \n";
         text += "/saei - ¿? ;) \n"
         wedding = emoji.emojize(":wedding::bride_with_veil::couple::couplekiss:",use_aliases=True);
-        text += "/bodaLaura - "+wedding+"\n";
+        text += "/bodalaura - "+wedding+"\n";
+        text += "/bodaelena - "+wedding+ "\n";
         text += "/piropo - Pide un piropo o, añadiendo Nombre Apellidos, manda un piropo a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
         text += "/addpiropo - Añade un piropo a la lista. Ej: /piropo Que bien te veo! \n";
         text += "/randomemoji - Pide un emoji aleatorio \n";
         text += "/cat - !!! \n";
+        text += "/help - Ayuda \n";
         return text;
 
 def main(*args, **kw):

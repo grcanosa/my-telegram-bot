@@ -13,13 +13,14 @@ class BodaResp(TimeUntil):
                 userR = None,
                 name="",
                 filename="",
-                priority = 50):
-        super().__init__(cmdget="boda"+name,
+                priority = 50,alt_resp=False):
+        super().__init__(cmdget="boda"+name.lower(),
                         updater=updater,
                         userR=userR,
                         filename=filename,
                         priority=priority);
         self._name = name;
+        self._alt_resp = alt_resp;
 
 
     def get_response_text(self,t,tnow):
@@ -34,22 +35,24 @@ class BodaResp(TimeUntil):
         text += happy + "\n \n";
         #text += "     "+wedding;
         #text += "\n";
-        text += " La boda de "+self._name+ " es el ";
-        text += datetime.datetime.fromtimestamp(t).strftime("%d del %m a las %H:%M");
-        text += "!!! "
-        # text += "\n";
-        # text += happy;
-        text += "\n";
-        text += " Quedan ";
-        diffS = t-tnow;
-        days = diffS // (24*3600);
-        hours = (diffS-days*24*3600) // 3600;
-        minutes = (diffS-days*24*3600-hours*3600) // 60;
-        seconds = (diffS -days*24*3600 -hours *3600 -minutes * 60);
-        if days > 0: text += str(int(days))+ " días, ";
-        if hours > 0: text += str(int(hours))+ " horas, ";
-        if minutes > 0: text += str(int(minutes))+ " minutos, "
-        text += "y "+str(int(seconds))+" segundos";
+        if self._alt_resp:
+            text += "¡¡¡Todavía no sabemos cuando es la boda de "+self._name;
+            text += ", pero lo celebraremos igual!!! \n";
+        else:
+            text += " La boda de "+self._name+ " es el ";
+            text += datetime.datetime.fromtimestamp(t).strftime("%d del %m a las %H:%M");
+            text += "!!! "
+            text += "\n";
+            text += " Quedan ";
+            diffS = t-tnow;
+            days = diffS // (24*3600);
+            hours = (diffS-days*24*3600) // 3600;
+            minutes = (diffS-days*24*3600-hours*3600) // 60;
+            seconds = (diffS -days*24*3600 -hours *3600 -minutes * 60);
+            if days > 0: text += str(int(days))+ " días, ";
+            if hours > 0: text += str(int(hours))+ " horas, ";
+            if minutes > 0: text += str(int(minutes))+ " minutos, "
+            text += "y "+str(int(seconds))+" segundos";
         text += 2*"\n";
         text += happy;
         return text;
