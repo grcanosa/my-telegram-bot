@@ -14,18 +14,16 @@ from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from ...handler.randomemoji import RandomEmoji;
 from ...handler.timeuntil import TimeUntil;
-from .catgifs import CatGifList;
-from .saeiresp import SaeiResp;
-from .bodaresp import BodaResp;
+from .sesioneslist import SesionesList
 
 logger = logging.getLogger(__name__);
 
 
 
-class SaeibotBot(BaseBot):
+class RocierosBot(BaseBot):
     def __init__(self,logfolder,datafolder):
-        super().__init__(TOKEN["SAEIIIIBOT"]);
-        self._logFile = logfolder+"/saeii.users.reg";
+        super().__init__(TOKEN["ROCIEROSBOT"]);
+        self._logFile = logfolder+"/rocieros.users.reg";
         self._datafolder = datafolder;
         self._userR = UserRegistry(self._logFile)
         self.install_handlers();
@@ -51,18 +49,13 @@ class SaeibotBot(BaseBot):
                     filename=self._datafolder+"/emojis.txt",
                     updater=self._updater,userR=self._userR,priority=50);
 
-        SaeiResp(updater=self._updater,userR=self._userR,priority=50);
-
-        BodaResp(updater=self._updater,userR=self._userR,priority=50,
-                  name="Laura",filename=self._datafolder+"/saei/bodalaura.txt");
-
+        SesionesList(cmd="sesion",filename=self._datafolder+"/rocierosbot/sesiones.txt",
+                    updater=self._updater,userrR=self._userR,priority=50);
 
 
     def get_help(self):
-        text = "Soy saeiiiiibot, y esto es lo que puedo hacer: \n";
-        text += "/saei - ¿? ;) \n"
-        wedding = emoji.emojize(":wedding::bride_with_veil::couple::couplekiss:",use_aliases=True);
-        text += "/bodaLaura - "+wedding+"\n";
+        text = "Soy el bot oficial de los rocieros, y esto es lo que puedo hacer: \n";
+        text += "/sesion - Información sobre las siguiente sesión"
         text += "/piropo - Pide un piropo o, añadiendo Nombre Apellidos, manda un piropo a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
         text += "/addpiropo - Añade un piropo a la lista. Ej: /piropo Que bien te veo! \n";
         text += "/randomemoji - Pide un emoji aleatorio \n";
@@ -70,6 +63,6 @@ class SaeibotBot(BaseBot):
         return text;
 
 def main(*args, **kw):
-    n = SaeibotBot(kw["logfolder"],kw["datafolder"]);
+    n = RocierosBot(kw["logfolder"],kw["datafolder"]);
     n.start();
     n.idle();
