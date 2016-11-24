@@ -16,6 +16,7 @@ from ...handler.randomemoji import RandomEmoji;
 from ...handler.timeuntil import TimeUntil;
 from ...handler.catgifs import CatGifList;
 from .sesioneslist import SesionesList
+from ...users.userstats import UserStats;
 
 logger = logging.getLogger(__name__);
 

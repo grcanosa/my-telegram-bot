@@ -13,6 +13,8 @@ from ...handler.piropos import PiropoList;
 from ...handler.fixedresponse import FixedResponse;
 from ...handler.catgifs import CatGifList;
 from .sepsianadas import SepsianadaList;
+from ...users.userstats import UserStats;
+
 
 logger = logging.getLogger(__name__);
 
@@ -60,9 +62,7 @@ class SepsaBot(BaseBot):
         text += "/sepsa - Para saber más... \n";
         text += "/sepsianada - Sepsianada al azar"
         text += "/addsepsianada - Añadir sepsianada a la lista \n";
-        text += "/piropo - Pide un piropo \n";
-        text += "/piropo Nombre Apellidos - Manda un piropo a otro usuario del bot. \n"
-        text += "/addpiropo PIROPO A AÑADIR -  Añade un piropo a la lista \n";
+        text += "/piropo - Pide o manda un piropo. Para mandar escribe /piropo Nombre Apellidos. \n";
         text += "/cat - Pide un gato!! \n";
         return text;
 

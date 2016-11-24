@@ -14,6 +14,7 @@ from ...handler.fixedresponse import FixedResponse;
 from ...handler.randomemoji import RandomEmoji;
 from ...handler.catgifs import CatGifList;
 from .sarapiropos import SaraPiropoList
+from ...users.userstats import UserStats;
 
 logger = logging.getLogger(__name__);
 

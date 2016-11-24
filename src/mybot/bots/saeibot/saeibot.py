@@ -17,6 +17,7 @@ from ...handler.timeuntil import TimeUntil;
 from .catgifs import CatGifList;
 from .saeiresp import SaeiResp;
 from .bodaresp import BodaResp;
+from ...users.userstats import UserStats;
 
 logger = logging.getLogger(__name__);
 

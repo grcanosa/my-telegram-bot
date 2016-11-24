@@ -15,9 +15,9 @@ stop)
 start)
     symlink=$(readlink -f "$0")
 	  path=$(dirname $symlink)
-	  echo $path
-    mkdir -p $path/log
-	  $path/multilauncher.py --logfolder=$path/data/log --datafolder=$path/data &
+    echo "Creating folder in $path/../data/log"
+    mkdir -p $path/../data/log
+	  $path/multilauncher.py --logfolder=$path/../data/log --datafolder=$path/../data &
     #echo $! > /tmp/telegrambots.pid
     ;;
 restart)
