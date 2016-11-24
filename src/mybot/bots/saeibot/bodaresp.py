@@ -40,7 +40,9 @@ class BodaResp(TimeUntil):
             text += ", pero lo celebraremos igual!!! \n";
         else:
             text += " La boda de "+self._name+ " es el ";
-            text += datetime.datetime.fromtimestamp(t).strftime("%d del %m a las %H:%M");
+            text += datetime.datetime.fromtimestamp(t).strftime("%d de ");
+            text += TimeUntil.MONTH[datetime.datetime.fromtimestamp(t).month]
+            text += datetime.datetime.fromtimestamp(t).strftime(" a las %H:%M");
             text += "!!! "
             text += "\n";
             text += " Quedan ";

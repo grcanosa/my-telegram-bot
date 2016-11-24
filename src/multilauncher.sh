@@ -8,9 +8,9 @@ stop)
     echo "Stop Bots"
     killall multilauncher.py
     #kill "`cat /tmp/telegrambots.pid`"
-    sleep 30
+    sleep 5
     killall -9 multilauncher.py
-    killall -9 multilauncher.py
+    #killall -9 multilauncher.py
     ;;
 start)
     symlink=$(readlink -f "$0")

@@ -68,7 +68,7 @@ class RocierosBot(BaseBot):
     def get_help(self):
         text = "Soy el bot oficial de los rocieros, y esto es lo que puedo hacer: \n";
         text += "/sesion - Información sobre las siguiente sesión \n"
-        text += "/animos - Pide una frase de ánimo, o mándasela a otro usuario así: /animos Nombre Apellidos"
+        text += "/animos - Pide una frase de ánimo, o mándasela a otro usuario así: /animos Nombre Apellidos \n"
         text += "/piropo - Pide un piropo o manda uno a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
         #text += "/addpiropo - Añade un piropo a la lista. Ej: /piropo Que bien te veo! \n";
         text += "/randomemoji - Emoji aleatorio \n";
