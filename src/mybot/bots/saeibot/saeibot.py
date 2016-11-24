@@ -17,6 +17,7 @@ from ...handler.timeuntil import TimeUntil;
 from .catgifs import CatGifList;
 from .saeiresp import SaeiResp;
 from .bodaresp import BodaResp;
+from .minimari import MiniMari
 from ...users.userstats import UserStats;
 
 logger = logging.getLogger(__name__);
@@ -66,15 +67,19 @@ class SaeibotBot(BaseBot):
         BodaResp(updater=self._updater,userR=self._userR,priority=50,
                   name="Elena",filename=self._datafolder+"/saei/bodaelena.txt",alt_resp=True);
 
+        MiniMari(updater=self._updater,userR=self._userR,priority=50,
+                filename=self._datafolder+"/saei/minimari.txt");
 
     def get_help(self):
         text = "Soy saeiiiiibot, y esto es lo que puedo hacer: \n";
         text += "/saei - ¿? ;) \n"
         wedding = emoji.emojize(":wedding::bride_with_veil::couple::couplekiss:",use_aliases=True);
+        baby = emoji.emojize(":baby:",use_aliases=True);
         text += "/bodalaura - "+wedding+"\n";
         text += "/bodaelena - "+wedding+ "\n";
+        text += "/minimari - "+5*baby+"\n";
         text += "/piropo - Pide un piropo o, añadiendo Nombre Apellidos, manda un piropo a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
-        text += "/addpiropo - Añade un piropo a la lista. Ej: /piropo Que bien te veo! \n";
+        text += "/addpiropo - Añade un piropo a la lista. Ej: /addpiropo Que bien te veo! \n";
         text += "/randomemoji - Pide un emoji aleatorio \n";
         text += "/cat - !!! \n";
         text += "/help - Ayuda \n";
