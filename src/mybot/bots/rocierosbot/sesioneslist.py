@@ -27,7 +27,7 @@ class SesionesList(TimeUntil):
         text= "";
         text += " La próxima sesión es el ";
         text += datetime.datetime.fromtimestamp(t).strftime("%d del %m a las %H:%M");
-        text += ".\n "
+        text += ".\n"
         # text += "\n";
         # text += happy;
         #text += "\n";

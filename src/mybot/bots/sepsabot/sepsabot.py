@@ -20,14 +20,16 @@ logger = logging.getLogger(__name__);
 
 class SepsaBot(BaseBot):
     def __init__(self,logfolder,datafolder):
-        super().__init__(TOKEN["GRCANOSABOT"]);
+        super().__init__(TOKEN["SEPSABOT"]);
         self._logFile = logfolder+"/sepsabot.users.reg";
         self._datafolder = datafolder;
-        self._userR = UserRegistry(self._logFile)
+        self._userR = UserRegistry(self._logFile,admin_cid=CID["GONZALO"])
         self.install_handlers();
 
     def install_handlers(self):
         self._userR.install(self._updater);
+
+        UserStats(cmd="stats",updater=self._updater,userR=self._userR,priority=50);
 
         BroadcastCmd(updater=self._updater,userR=self._userR,admin_cid=CID["GONZALO"],
                     priority=50);

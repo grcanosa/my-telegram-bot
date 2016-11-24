@@ -9,7 +9,7 @@ class SepsianadaList(PhraseList):
                       filename ="",
                       updater=None,
                       userR = None,
-                      phrasetype="gif",
+                      phrasetype="message",
                       priority = 50):
         super().__init__(cmdget=cmdget,cmdadd=cmdadd,filename=filename,updater=updater,userR=userR,priority=priority,phrasetype=phrasetype);
 

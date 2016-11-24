@@ -27,14 +27,17 @@ class SaeibotBot(BaseBot):
         super().__init__(TOKEN["SAEIIIIBOT"]);
         self._logFile = logfolder+"/saeii.users.reg";
         self._datafolder = datafolder;
-        self._userR = UserRegistry(self._logFile)
+        self._userR = UserRegistry(self._logFile,admin_cid=CID["GONZALO"])
         self.install_handlers();
 
     def install_handlers(self):
         self._userR.install(self._updater);
 
+        UserStats(cmd="stats",updater=self._updater,userR=self._userR,priority=50);
+
         BroadcastCmd(updater=self._updater,userR=self._userR,admin_cid=CID["GONZALO"],
                     priority=50);
+
 
         PiropoList(cmdget="piropo",cmdadd="addpiropo",
                     filename=self._datafolder+"/saei/piropos.txt",
