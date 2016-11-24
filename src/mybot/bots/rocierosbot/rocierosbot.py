@@ -16,6 +16,7 @@ from ...handler.randomemoji import RandomEmoji;
 from ...handler.timeuntil import TimeUntil;
 from ...handler.catgifs import CatGifList;
 from .sesioneslist import SesionesList
+from .animos import AnimosList
 from ...users.userstats import UserStats;
 
 logger = logging.getLogger(__name__);
@@ -39,7 +40,7 @@ class RocierosBot(BaseBot):
                     priority=50);
 
         PiropoList(cmdget="piropo",cmdadd="addpiropo",
-                    filename=self._datafolder+"/saei/piropos.txt",
+                    filename=self._datafolder+"/rocierosbot/piropos.txt",
                     updater=self._updater,userR=self._userR,priority=50);
 
         CatGifList(cmdget="cat",cmdadd="",
@@ -59,14 +60,18 @@ class RocierosBot(BaseBot):
         SesionesList(cmd="sesion",filename=self._datafolder+"/rocierosbot/sesiones.txt",
                     updater=self._updater,userR=self._userR,priority=50);
 
+        AnimosList(cmdget="animos",cmdadd="addanimo",filename=self._datafolder+"/rocierosbot/animos.txt",
+                    updater=self._updater, userR=self._userR,priority=50);
+
 
 
     def get_help(self):
         text = "Soy el bot oficial de los rocieros, y esto es lo que puedo hacer: \n";
         text += "/sesion - Información sobre las siguiente sesión \n"
-        text += "/piropo - Pide un piropo o, añadiendo Nombre Apellidos, manda un piropo a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
+        text += "/animos - Pide una frase de ánimo, o mándasela a otro usuario así: /animos Nombre Apellidos"
+        text += "/piropo - Pide un piropo o manda uno a otro usuario. Ejemplo: /piropo Gonzalo Rodriguez \n";
         #text += "/addpiropo - Añade un piropo a la lista. Ej: /piropo Que bien te veo! \n";
-        text += "/randomemoji - Pide un emoji aleatorio \n";
+        text += "/randomemoji - Emoji aleatorio \n";
         text += "/cat - !!! \n";
         text += "/help - Ayuda \n";
         return text;

@@ -26,12 +26,14 @@ class SesionesList(TimeUntil):
         logger.debug("Getting next text for timestamp %d",t);
         text= "";
         text += " La próxima sesión es el ";
-        text += datetime.datetime.fromtimestamp(t).strftime("%d del %m a las %H:%M");
+        text += datetime.datetime.fromtimestamp(t).strftime("%d de ");
+        text += TimeUntil.MONTH[datetime.datetime.fromtimestamp(t).month]
+        text += datetime.datetime.fromtimestamp(t).strftime(" a las %H:%M");
         text += ".\n"
         # text += "\n";
         # text += happy;
         #text += "\n";
-        text += " Quedan ";
+        text += "Quedan ";
         diffS = t-tnow;
         days = diffS // (24*3600);
         hours = (diffS-days*24*3600) // 3600;

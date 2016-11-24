@@ -22,6 +22,8 @@ class TimeUntil:
         self.load_data();
         self.install_handler();
 
+    MONTH = { 1: 'Enero', 2 : 'Febrero', 3:'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio',
+              7 : 'Julio', 8 : 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre'};
 
     def load_data(self):
         logger.debug("Trying to read from file %s",self._filename)
@@ -47,7 +49,7 @@ class TimeUntil:
     def get_response_text(self,t,tnow):
         logger.debug("Getting next text for timestamp %d",t);
         text = "La próxima cita es el ";
-        text += datetime.datetime.fromtimestamp(t).strftime("%d del %m a las %H:%M.");
+        text += datetime.datetime.fromtimestamp(t).strftime("%d del %b a las %H:%M.");
         text += " Quedan ";
         diffS = t-tnow;
         days = diffS // (24*3600);
